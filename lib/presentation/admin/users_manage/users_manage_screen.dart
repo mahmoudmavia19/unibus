@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:unibus/core/app_export.dart';
 import 'package:unibus/core/utils/app_strings.dart';
 import 'package:unibus/presentation/admin/users_manage/model/user_model.dart';
-import 'package:unibus/widgets/admin_drawer/admin_drawer.dart';
+import '../../../widgets/drawer/admin_drawer.dart';
 
 class UsersManagementScreen extends StatelessWidget {
   final List<UserModel> users = [

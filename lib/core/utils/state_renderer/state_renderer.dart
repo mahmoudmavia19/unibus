@@ -144,7 +144,8 @@ class StateRenderer extends StatelessWidget {
                       StateRendererType.fullScreenErrorState) {
                     // call retry function
                     retryActionFunction.call();
-                  } else {
+                  }
+                  else {
                     // popup error state
                     Get.back();
                   }

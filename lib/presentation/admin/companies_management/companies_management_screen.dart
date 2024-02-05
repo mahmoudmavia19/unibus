@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:unibus/core/app_export.dart';
 import 'package:unibus/core/utils/app_strings.dart';
-import 'package:unibus/widgets/admin_drawer/admin_drawer.dart';
 
+import '../../../widgets/drawer/admin_drawer.dart';
 import 'model/company_model.dart';
 
 

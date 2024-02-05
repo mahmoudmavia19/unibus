@@ -68,6 +68,16 @@ class ThemeHelper {
           padding: EdgeInsets.zero,
         ),
       ),
+      dropdownMenuTheme: DropdownMenuThemeData(
+        menuStyle: MenuStyle(
+        ),
+        textStyle: TextStyle(
+          color: Colors.black
+        ),
+        inputDecorationTheme: InputDecorationTheme(
+          border: OutlineInputBorder()
+        )
+      ),
       outlinedButtonTheme: OutlinedButtonThemeData(
         style: OutlinedButton.styleFrom(
           backgroundColor: Colors.transparent,
@@ -85,6 +95,14 @@ class ThemeHelper {
           padding: EdgeInsets.zero,
         ),
       ),
+      dialogTheme:DialogTheme(
+        titleTextStyle: TextStyle(
+          fontSize: 24.fSize,
+          fontFamily: 'Inter',
+          fontWeight: FontWeight.w700,
+          color: colorScheme.primary
+        ),
+      ) ,
       dividerTheme: DividerThemeData(
         thickness: 1,
         space: 1,

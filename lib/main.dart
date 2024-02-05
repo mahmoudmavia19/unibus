@@ -27,7 +27,7 @@ class MyApp extends StatelessWidget {
         fallbackLocale: Locale('en', 'US'),
         title: 'UNIBUS',
         initialBinding: InitialBindings(),
-        initialRoute: AppRoutes.initialRoute,
+        initialRoute: AppRoutes.companyProfileScreen,
         getPages: AppRoutes.pages,
       );
     });

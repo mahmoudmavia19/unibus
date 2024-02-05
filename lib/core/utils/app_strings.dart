@@ -14,6 +14,7 @@ class AppStrings {
   static const String emailId = 'Email ID';
   static const String password1 = 'Password';
   static const String companyManagement = 'Company Management';
+  static const String companyProfile = 'Company Profile';
   static const String companyId = 'Company ID';
   static const String companyName = 'Company Name';
   static const String companyEmail = 'Company Email';
@@ -25,5 +26,37 @@ class AppStrings {
   static const String loading = 'Loading ...';
   static const String retryAgain = 'Retry Again';
   static const String error = 'Error';
+  static const String priceManagement = 'Price Management';
+  static const String driversManagement = 'Drivers Management';
+  static const String successAdded = 'Driver Added Successfully';
+  static const String successUpdated = 'Driver Updated Successfully';
+  static const String successDeleted = 'Driver Deleted Successfully';
+   static const String addUserDialogTitle = 'Add Driver';
+  static const String editUserDialogTitle = 'Edit Driver';
+  static const String confirmDeletionTitle = 'Confirm Deletion';
+  static const String confirmDeletionContent = 'Are you sure you want to delete this driver?';
+  static const String addButtonText = 'Add';
+  static const String saveButtonText = 'Save';
+  static const String cancelButtonText = 'Cancel';
+  static const String userNameLabel = 'User Name';
+  static const String addressLabel = 'Address';
+  static const String phoneLabel = 'Phone';
+  static const String emailLabel = 'Email';
+  static const String passwordLabel = 'Password';
+  static const String deleteButtonText = 'Delete';
+  static const String tripsManagement = 'Trips Management';
+  static const String location = 'Location';
+  static const String driver = 'Driver';
+  static const String time = 'Time';
+  static const String day = 'Day';
+  static const String addTrip = 'Add Trip';
+  static const String editTrip = 'Edit Trip';
+  static const String tripTitle = 'Trip Management';
+  static const String tripNumber = 'Trip Number';
+  static const String tripExitGate = 'Exit Gate';
+  static const String tripEntryGate = 'Entry Gate';
+  static const String currentLocation = 'Current Location';
+  static const String tripContent = 'Trip Management';
+
 
 }

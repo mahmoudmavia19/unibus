@@ -1,11 +1,21 @@
 import 'package:unibus/presentation/admin/admin_profile/admin_profile_screen.dart';
 import 'package:unibus/presentation/admin/admin_profile/binding/admin_profile_binding.dart';
 import 'package:unibus/presentation/admin/users_manage/users_manage_screen.dart';
+import 'package:unibus/presentation/comapny/drivers_management/binding/driver_binding.dart';
+import 'package:unibus/presentation/comapny/drivers_management/drivers_screen.dart';
+import 'package:unibus/presentation/comapny/price_management/binding/price_binding.dart';
+import 'package:unibus/presentation/comapny/profile/binding/profile_binding.dart';
 import 'package:unibus/presentation/splash_screen/splash_screen.dart';
 import 'package:unibus/presentation/splash_screen/binding/splash_binding.dart';
 import 'package:get/get.dart';
 
 import '../presentation/admin/companies_management/companies_management_screen.dart';
+ import '../presentation/comapny/price_management/price_management_screen.dart';
+import '../presentation/comapny/profile/profile_screen.dart';
+import '../presentation/comapny/travels_management/add_trip_management.dart';
+import '../presentation/comapny/travels_management/binding/travels_binding.dart';
+import '../presentation/comapny/travels_management/ediy_trip_screen.dart';
+import '../presentation/comapny/travels_management/tervels_screen.dart';
 
 class AppRoutes {
   static const String splashScreen = '/splash_screen';
@@ -14,6 +24,14 @@ class AppRoutes {
   static const String adminProfileScreen = '/admin/adminProfileScreen';
   static const String adminUsersManagementScreen = '/admin/adminUsersManagementScreen';
   static const String adminCompaniesManagementScreen = '/admin/adminCompaniesManagementScreen';
+
+  // company routes
+  static const String companyProfileScreen = '/company/companyProfileScreen';
+  static const String companyPriceManagementScreen = '/company/companyPriceManagementScreen';
+  static const String companyDriversManagementScreen = '/company/companyDriversManagementScreen';
+  static const String companyTripManagementScreen = '/company/companyTravelsManagementScreen';
+  static const String companyAddTripScreen = '/company/companyAddTripScreen';
+  static const String companyEditTripScreen = '/company/companyEditTripScreen';
 
 
   static List<GetPage> pages = [
@@ -43,7 +61,37 @@ class AppRoutes {
     GetPage (
       name: adminCompaniesManagementScreen,
       page: () => CompanyManagementScreen(),
-
+    ),
+    // company routes
+    GetPage (
+      name: companyProfileScreen,
+      page: () => CompanyProfile(),
+      binding: CompanyProfileBinding(),
+    ),
+    GetPage (
+      name: companyPriceManagementScreen,
+      page: () => PriceManagementScreen(),
+      binding: PriceBinding(),
+    ),
+    GetPage (
+      name: companyDriversManagementScreen,
+      page: () => DriverManagementScreen(),
+      binding: DriversBinding(),
+    ),
+    GetPage (
+      name: companyTripManagementScreen,
+      page: () => TripsManagementScreen(),
+      binding: TripsBinding(),
+    ),
+    GetPage (
+      name: companyAddTripScreen,
+      page: () => AddTripScreen(),
+      binding: TripsBinding(),
+    ),
+    GetPage (
+      name: companyEditTripScreen,
+      page: () => EditTripScreen(),
+      binding: TripsBinding(),
     )
   ];
 }
