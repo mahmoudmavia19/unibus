@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:unibus/core/utils/state_renderer/state_renderer_impl.dart';
 import 'package:unibus/widgets/drawer/comapnyDrawer.dart';
 
@@ -33,23 +34,29 @@ class TripsManagementScreen extends StatelessWidget {
       itemCount: tripController.trips.length,
       itemBuilder: (context, index) {
         Trip trip = tripController.trips[index];
-        return ListTile(
-          onTap: () => _showTrip(trip),
-          title: Text(trip.enterGate??""),
-          subtitle: Text(trip.driver??""),
-          trailing: Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              IconButton(
-                icon: Icon(Icons.edit),
-                onPressed: () => _editTrip(context, index, trip),
+        return Column(
+          children: [
+            ListTile(
+              onTap: () => _showTrip(trip),
+              leading: Text(trip.number??"",style: TextStyle(color: theme.primaryColor,fontSize: 16.0),),
+              title: Text(trip.enterGate??""),
+              subtitle: Text(DateFormat.yMMMd().format(trip.time!)),
+              trailing: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  IconButton(
+                    icon: Icon(Icons.edit),
+                    onPressed: () => _editTrip(context, index, trip),
+                  ),
+                  IconButton(
+                    icon: Icon(Icons.delete),
+                    onPressed: () => _deleteTrip(index),
+                  ),
+                ],
               ),
-              IconButton(
-                icon: Icon(Icons.delete),
-                onPressed: () => _deleteTrip(index),
-              ),
-            ],
-          ),
+            ),
+            Divider(),
+          ],
         );
       },
     );
@@ -57,7 +64,7 @@ class TripsManagementScreen extends StatelessWidget {
 
   void _showTrip(Trip trip) {
     Get.defaultDialog(
-      title: trip.enterGate??"",
+      title: trip.number??"",
       content: SingleChildScrollView(
         child: Form(
           key: tripController.addFormKey,
@@ -66,7 +73,7 @@ class TripsManagementScreen extends StatelessWidget {
             children: [
               _buildText(AppStrings.location, trip.enterGate??""),
               _buildText(AppStrings.driver, trip.driver??""),
-              _buildText(AppStrings.time, trip.time.toString()),
+              _buildText(AppStrings.time, DateFormat.yMMMd().format(trip.time!)),
              ],
           ),
         ),
@@ -80,10 +87,11 @@ class TripsManagementScreen extends StatelessWidget {
 
   Widget _buildText(String label, String value) {
     return Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(label, style: TextStyle(fontWeight: FontWeight.bold)),
         SizedBox(width: 10.0),
-        Text(value),
+        Expanded(child: Text(value)),
       ],
     );
   }

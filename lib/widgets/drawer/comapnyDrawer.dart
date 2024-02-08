@@ -14,19 +14,28 @@ class CompanyDrawer extends StatelessWidget {
                     border: Border(bottom: BorderSide(color: Colors.grey[900]!))
                 ),
               ),
-              _tab(AppStrings.companyProfile,(){
-                Get.toNamed(AppRoutes.companyProfileScreen);
+              _tab(Icons.work_outlined,AppStrings.companyProfile,(){
+                Get.offAllNamed(AppRoutes.companyProfileScreen);
               }),
-              _tab(AppStrings.priceManagement,(){
-                Get.toNamed(AppRoutes.companyPriceManagementScreen);
+              _tab(Icons.price_change,AppStrings.priceManagement,(){
+                Get.offAllNamed(AppRoutes.companyPriceManagementScreen);
               }),
-              _tab(AppStrings.driversManagement,(){
-                Get.toNamed(AppRoutes.companyDriversManagementScreen);
+              _tab(Icons.person,AppStrings.driversManagement,(){
+                Get.offAllNamed(AppRoutes.companyDriversManagementScreen);
               }),
-              _tab(AppStrings.tripsManagement,(){
-                Get.toNamed(AppRoutes.companyTripManagementScreen);
+              _tab(Icons.mode_of_travel,AppStrings.tripsManagement,(){
+                Get.offAllNamed(AppRoutes.companyTripManagementScreen);
               }),
-              _tab(AppStrings.logout,(){
+              _tab(Icons.supervised_user_circle_sharp,AppStrings.StudentsRequests,(){
+                Get.offAllNamed(AppRoutes.companyStudentRequestScreen);
+              }),
+              _tab(Icons.chat_bubble,AppStrings.chatCenter,(){
+                Get.offAllNamed(AppRoutes.companyChatCenter);
+              }),
+              _tab(Icons.track_changes,AppStrings.liveTrip,(){
+                Get.offAllNamed(AppRoutes.companyLiveTrip);
+              }),
+              _tab(Icons.logout,AppStrings.logout,(){
                 //Get.toNamed(AppRoutes.adminCompaniesManagementScreen);
               }),
             ]
@@ -34,9 +43,10 @@ class CompanyDrawer extends StatelessWidget {
     );
   }
 
-  _tab(title,action)=> Column(
+  _tab(icon,title,action)=> Column(
     children: [
       ListTile(
+        leading: Icon(icon,color: theme.primaryColor,) ,
         title: Text(title),
         trailing: Icon(Icons.arrow_forward_ios),
         onTap: action,

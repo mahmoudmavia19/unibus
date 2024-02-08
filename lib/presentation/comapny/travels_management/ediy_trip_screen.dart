@@ -59,17 +59,11 @@ class EditTripScreen extends GetWidget<EditTripController> {
           Text(AppStrings.driver, style: Theme.of(context).textTheme.titleLarge),
           SizedBox(height: 16.0),
           SizedBox(height: 16.0),
-          DropdownButtonFormField<String>(items: [
-            DropdownMenuItem(
-              value: 'Driver 1',
-              child: Text('Driver 1'),
-            ),
-            DropdownMenuItem(
-              value: 'Driver 2',
-              child: Text('Driver 2'),
-            ),
-
-          ],
+          DropdownButtonFormField<String?>(items: controller.drivers.map((e) => DropdownMenuItem(
+            value: e,
+            child: Text(e),
+          )) .toList(),
+              value: controller.trip.driver,
               validator:(value) {
                 if(value == null){
                   return 'Please select a driver';

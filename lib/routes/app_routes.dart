@@ -10,8 +10,15 @@ import 'package:unibus/presentation/splash_screen/binding/splash_binding.dart';
 import 'package:get/get.dart';
 
 import '../presentation/admin/companies_management/companies_management_screen.dart';
- import '../presentation/comapny/price_management/price_management_screen.dart';
+ import '../presentation/comapny/chat_center/binding/chat_center_binding.dart';
+import '../presentation/comapny/chat_center/chat_center_screen.dart';
+import '../presentation/comapny/chat_center/chat_room_screen.dart';
+import '../presentation/comapny/live_trips/binding/live_trip_binding.dart';
+import '../presentation/comapny/live_trips/live_trips.dart';
+import '../presentation/comapny/price_management/price_management_screen.dart';
 import '../presentation/comapny/profile/profile_screen.dart';
+import '../presentation/comapny/student_requests/binding/student_requests_binding.dart';
+import '../presentation/comapny/student_requests/student_requests_screen.dart';
 import '../presentation/comapny/travels_management/add_trip_management.dart';
 import '../presentation/comapny/travels_management/binding/travels_binding.dart';
 import '../presentation/comapny/travels_management/ediy_trip_screen.dart';
@@ -32,6 +39,10 @@ class AppRoutes {
   static const String companyTripManagementScreen = '/company/companyTravelsManagementScreen';
   static const String companyAddTripScreen = '/company/companyAddTripScreen';
   static const String companyEditTripScreen = '/company/companyEditTripScreen';
+  static const String companyStudentRequestScreen = '/company/companyStudentRequestScreen';
+  static const String companyChatCenter = '/company/companyChatCenter';
+  static const String companyChatRoom = '/company/companyChatRoom';
+  static const String companyLiveTrip = '/company/companyLiveTrip';
 
 
   static List<GetPage> pages = [
@@ -92,6 +103,25 @@ class AppRoutes {
       name: companyEditTripScreen,
       page: () => EditTripScreen(),
       binding: TripsBinding(),
+    ),
+    GetPage(
+      name: companyStudentRequestScreen,
+      page: () => StudentRequestScreen(),
+      binding: StudentRequestsBinding(),
+    ),
+    GetPage (
+      name: companyChatCenter,
+      page: () => ChatCenterScreen(),
+      binding: ChatCenterBinding(),
+    ),
+    GetPage (
+      name: companyChatRoom,
+      page: () => ChatRoomScreen(chat: Get.arguments)
+    ),
+    GetPage (
+      name: companyLiveTrip,
+      page: () => LiveTripScreen(),
+      binding: LiveTripBinding(),
     )
   ];
 }

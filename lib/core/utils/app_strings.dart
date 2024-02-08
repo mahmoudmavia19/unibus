@@ -57,6 +57,13 @@ class AppStrings {
   static const String tripEntryGate = 'Entry Gate';
   static const String currentLocation = 'Current Location';
   static const String tripContent = 'Trip Management';
+  static const String rateDriverTitle = 'Rate';
+  static const String StudentsRequests = 'Students Requests';
+  static const String status = 'Status';
+  static const String accepted = 'Accepted';
+  static const String rejected = 'Rejected';
+  static const String chatCenter = 'Chat Center';
+  static const String liveTrip = 'Live Trips';
 
 
 }

@@ -25,7 +25,11 @@ class AddTripController extends GetxController {
   TripController tripController = Get.put(TripController());
   Trip trip = Trip();
   FlowState get getState => state.value;
-
+  List<String> drivers = [
+    'Driver 1 ',
+    'Driver 2',
+    'Driver 3',
+  ];
   @override
   void onClose() {
     mapController.dispose();
@@ -78,8 +82,7 @@ class AddTripController extends GetxController {
     if (flowKey.currentState!.validate()) {
       trip.enterGate = tripEnterGateController.text;
       trip.exitGate = tripExitGateController.text;
-       trip.driver = tripNumberController.text;
-       trip.number = tripNumberController.text;
+        trip.number = tripNumberController.text;
        tripController.addTrip(trip);
       Get.back();
     }

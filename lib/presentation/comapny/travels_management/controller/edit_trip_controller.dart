@@ -26,6 +26,12 @@ class EditTripController extends GetxController {
   TripController tripController = Get.put(TripController());
    FlowState get getState => state.value;
 
+
+   List<String> drivers = [
+     'Driver 1 ',
+     'Driver 2',
+     'Driver 3',
+   ];
   @override
   void onClose() {
     mapController.dispose();

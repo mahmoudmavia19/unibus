@@ -91,7 +91,7 @@ extension FlowStateExtension on FlowState {
         {
           if (getStateRendererType() == StateRendererType.popupLoadingState) {
             // show popup loading
-            showPopup(getStateRendererType(), getMessage());
+            showPopup(getStateRendererType(), getMessage(),retryActionFunction: retryActionFunction);
             // show content ui of the screen
             return contentScreenWidget;
           } else {
@@ -107,7 +107,7 @@ extension FlowStateExtension on FlowState {
           dismissDialog();
           if (getStateRendererType() == StateRendererType.popupErrorState) {
             // show popup error
-            showPopup(getStateRendererType(), getMessage());
+            showPopup(getStateRendererType(), getMessage(),retryActionFunction: retryActionFunction);
             // show content ui of the screen
             return contentScreenWidget;
           } else {
@@ -123,7 +123,7 @@ extension FlowStateExtension on FlowState {
           dismissDialog();
           if (getStateRendererType() == StateRendererType.popupSuccessState) {
             // show popup error
-            showPopup(getStateRendererType(), getMessage());
+            showPopup(getStateRendererType(), getMessage(),retryActionFunction: retryActionFunction);
             // show content ui of the screen
             return contentScreenWidget;
           } else {
@@ -154,23 +154,26 @@ extension FlowStateExtension on FlowState {
     }
   }
 
-  _isCurrentDialogShowing() => Get.isDialogOpen ?? false;
+  _isCurrentDialogShowing() => Get.isOverlaysOpen;
 
   //    ModalRoute.of(context)?.isCurrent != true;
 
   dismissDialog() {
     if (_isCurrentDialogShowing()) {
-      Get.back(result: true);
+      Get.back(result: true,closeOverlays: true);
+      print('dismissDialog');
     }
   }
 
   showPopup(StateRendererType stateRendererType,
-      String message) {
+      String message,{required Function retryActionFunction}) {
      WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
        Get.dialog(StateRenderer(
            stateRendererType: stateRendererType,
            message: message,
-           retryActionFunction: () {}));
+           retryActionFunction:(){
+            print('object');
+            }));
      });
 
   }

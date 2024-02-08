@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
  import 'package:unibus/core/utils/app_strings.dart';
 import 'package:unibus/core/utils/state_renderer/state_renderer_impl.dart';
-
 import '../../../core/app_export.dart';
- import '../../../widgets/drawer/comapnyDrawer.dart';
+import '../../../widgets/drawer/comapnyDrawer.dart';
 import 'controller/drivers_controller.dart';
 import 'model/driver.dart';
 
@@ -20,7 +19,12 @@ class DriverManagementScreen extends StatelessWidget {
             Image.asset(ImageConstant.imgLogo, width: 50.0,),
           ]
       ),
-      body: Obx(() => driverController.state.value.getScreenWidget(_buildDriversList(), (){})),
+      body: Obx(() => driverController.state.value.getScreenWidget(_buildDriversList(), (){
+      /*  if(driverController.state.value is SuccessState){
+         print("success");
+         driverController.state.value = ContentState();
+        }*/
+      })),
       floatingActionButton: FloatingActionButton(
         onPressed: () => _addDriver(context),
         child: Icon(Icons.add),
@@ -33,25 +37,35 @@ class DriverManagementScreen extends StatelessWidget {
       itemCount: driverController.drivers.length,
       itemBuilder: (context, index) {
         Driver driver = driverController.drivers[index];
-        return ListTile(
-          onTap:(){
-            _showDriver(driver);
-          },
-          title: Text(driver.name),
-          subtitle: Text(driver.email),
-          trailing: Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              IconButton(
-                icon: Icon(Icons.edit),
-                onPressed: () => _editDriver(context, index, driver),
+        return Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            ListTile(
+              onTap:(){
+                _showDriver(driver);
+              },
+              title: Text(driver.name),
+              subtitle: Text(driver.email),
+              trailing: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  IconButton(
+                    icon: Icon(Icons.rate_review),
+                    onPressed: () => _showRateDriver(context, index, driver),
+                  ),
+                  IconButton(
+                    icon: Icon(Icons.edit),
+                    onPressed: () => _editDriver(context, index, driver),
+                  ),
+                  IconButton(
+                    icon: Icon(Icons.delete),
+                    onPressed: () => _deleteDriver(index),
+                  ),
+                ],
               ),
-              IconButton(
-                icon: Icon(Icons.delete),
-                onPressed: () => _deleteDriver(index),
-              ),
-            ],
-          ),
+            ),
+            Divider()
+          ],
         );
       },
     );
@@ -157,8 +171,31 @@ class DriverManagementScreen extends StatelessWidget {
       Get.back();
     }
   }
-
-  void _editDriver(BuildContext context, int index, Driver driver) {
+  _showRateDriver(BuildContext context, int index, Driver driver) {
+    return Get.defaultDialog(
+      titlePadding: EdgeInsets.all(10),
+      contentPadding:EdgeInsets.all(20),
+      title: driver.name + ' ' + AppStrings.rateDriverTitle,
+      content: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Icon(Icons.star,color: Colors.amber,),
+              Icon(Icons.star,color: Colors.amber,),
+              Icon(Icons.star,color: Colors.amber,),
+              Icon(Icons.star,color: Colors.grey,),
+              Icon(Icons.star,color: Colors.grey,),
+            ]
+          ),
+          SizedBox(height: 10.0,),
+          Text('Rate this driver'),
+        ]
+      )
+    ) ;
+  }
+  void  _editDriver(BuildContext context, int index, Driver driver) {
     TextEditingController userIdController = TextEditingController(text: driver.name);
     TextEditingController addressController = TextEditingController(text: driver.address);
     TextEditingController phoneController = TextEditingController(text: driver.phone.toString());

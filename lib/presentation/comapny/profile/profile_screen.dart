@@ -68,6 +68,11 @@ class CompanyProfile  extends StatelessWidget {
                       width: 50.0,
                       decoration: BoxDecoration(
                         color: theme.primaryColor,
+                        border: Border(
+                          left: BorderSide(color: Colors.black,width: 1.0),
+                          top: BorderSide(color: Colors.black,width: 1.0),
+                          bottom: BorderSide(color: Colors.black,width: 1.0),
+                        ),
                         borderRadius: BorderRadius.only(
                             topLeft: Radius.circular(10.0),
                             bottomLeft: Radius.circular(10.0)),
@@ -99,6 +104,11 @@ class CompanyProfile  extends StatelessWidget {
                       width: 50.0,
                       decoration: BoxDecoration(
                         color: theme.primaryColor,
+                        border: Border(
+                          left: BorderSide(color: Colors.black,width: 1.0),
+                          top: BorderSide(color: Colors.black,width: 1.0),
+                          bottom: BorderSide(color: Colors.black,width: 1.0),
+                        ),
                         borderRadius: BorderRadius.only(
                             topLeft: Radius.circular(10.0),
                             bottomLeft: Radius.circular(10.0)),

@@ -58,17 +58,11 @@ class AddTripScreen extends GetWidget<AddTripController> {
           Text(AppStrings.driver, style: Theme.of(context).textTheme.titleLarge),
           SizedBox(height: 16.0),
           SizedBox(height: 16.0),
-          DropdownButtonFormField<String>(items: [
-            DropdownMenuItem(
-              value: 'Driver 1',
-              child: Text('Driver 1'),
-            ),
-            DropdownMenuItem(
-              value: 'Driver 2',
-              child: Text('Driver 2'),
-            ),
-
-          ],
+          DropdownButtonFormField<String?>(items: controller.drivers.map((e) => DropdownMenuItem(
+            value: e,
+            child: Text(e),
+          )) .toList(),
+              value: controller.trip.driver,
               validator:(value) {
                 if(value == null){
                   return 'Please select a driver';
@@ -81,8 +75,8 @@ class AddTripScreen extends GetWidget<AddTripController> {
                 border: OutlineInputBorder(),
               ),
               onChanged:(value) {
-            controller.trip.driver = value;
-          }),
+                controller.trip.driver = value;
+              }),
           SizedBox(height: 16.0),
           Text(AppStrings.tripExitGate, style: Theme.of(context).textTheme.titleLarge),
           SizedBox(height: 16.0),

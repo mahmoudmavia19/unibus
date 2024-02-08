@@ -147,6 +147,7 @@ class StateRenderer extends StatelessWidget {
                   }
                   else {
                     // popup error state
+                    retryActionFunction.call();
                     Get.back();
                   }
                 },child: Text(buttonTitle))
@@ -154,4 +155,6 @@ class StateRenderer extends StatelessWidget {
       ),
     );
   }
+
+   static isPopState(state)=> state == StateRendererType.popupSuccessState || state == StateRendererType.popupErrorState || state == StateRendererType.popupLoadingState;
 }
