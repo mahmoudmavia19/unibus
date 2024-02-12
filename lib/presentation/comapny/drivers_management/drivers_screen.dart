@@ -44,7 +44,7 @@ class DriverManagementScreen extends StatelessWidget {
               onTap:(){
                 _showDriver(driver);
               },
-              title: Text(driver.name),
+              title: Text(driver.name,style: TextStyle(color: theme.primaryColor),),
               subtitle: Text(driver.email),
               trailing: Row(
                 mainAxisSize: MainAxisSize.min,
