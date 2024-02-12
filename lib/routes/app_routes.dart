@@ -10,6 +10,10 @@ import 'package:unibus/presentation/splash_screen/splash_screen.dart';
 import 'package:unibus/presentation/splash_screen/binding/splash_binding.dart';
 import 'package:get/get.dart';
 import 'package:unibus/presentation/switch_screen.dart';
+import 'package:unibus/presentation/user/main/binding/user_main_binding.dart';
+import 'package:unibus/presentation/user/main/main_screen.dart';
+import 'package:unibus/presentation/user/user_profile/binding/user_profile_binding.dart';
+import 'package:unibus/presentation/user/user_profile/user_profile.dart';
 
 import '../presentation/admin/companies_management/companies_management_screen.dart';
  import '../presentation/comapny/chat_center/binding/chat_center_binding.dart';
@@ -47,6 +51,10 @@ class AppRoutes {
   static const String companyChatRoom = '/company/companyChatRoom';
   static const String companyLiveTrip = '/company/companyLiveTrip';
   static const String companyDriversRatingScreen = '/company/companyDriversRatingScreen';
+  // user routes
+  static const String userProfileScreen = '/user/userProfileScreen';
+  static const String userMain = '/user/userMain';
+
 
   static List<GetPage> pages = [
     GetPage(
@@ -134,6 +142,17 @@ class AppRoutes {
       name: companyDriversRatingScreen,
       page: () => DriversRateScreen(),
       binding: DriversBinding(),
+    ),
+    // user routes
+    GetPage(
+      name: userProfileScreen,
+      page: () => UserProfileScreen(),
+      binding: UserProfileBinding(),
+    ),
+    GetPage(
+      name: userMain,
+      page: () => MainScreen(),
+      binding: UserMainBinding(),
     )
   ];
 }

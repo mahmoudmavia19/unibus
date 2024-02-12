@@ -20,6 +20,9 @@ class SwitchScreen extends StatelessWidget {
             TextButton(onPressed: (){
               Get.toNamed(AppRoutes.companyProfileScreen);
             }, child: Text('Company')),
+            TextButton(onPressed: (){
+              Get.offAndToNamed(AppRoutes.userMain);
+            }, child: Text('User')),
           ]
         ),
       )
