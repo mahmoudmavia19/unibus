@@ -124,26 +124,31 @@ class PriceManagementScreen extends StatelessWidget {
       itemBuilder: (context, index) {
         var district = priceController.districtPrices[index].district;
         var price = priceController.districtPrices[index].price;
-        return ListTile(
-          title: Text(district),
-          subtitle: Text('\$$price'),
-          trailing: Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              IconButton(
-                icon: Icon(Icons.edit),
-                onPressed: () {
-                  Get.dialog(
-                      _buildEditPriceField(index, district, price)
-                  );
-                },
+        return Column(
+          children: [
+            ListTile(
+              title: Text(district,style: TextStyle(color: theme.primaryColor),),
+              subtitle: Text('\$$price'),
+              trailing: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  IconButton(
+                    icon: Icon(Icons.edit),
+                    onPressed: () {
+                      Get.dialog(
+                          _buildEditPriceField(index, district, price)
+                      );
+                    },
+                  ),
+                  IconButton(
+                    icon: Icon(Icons.delete),
+                    onPressed: () => _deletePrice(index),
+                  ),
+                ],
               ),
-              IconButton(
-                icon: Icon(Icons.delete),
-                onPressed: () => _deletePrice(index),
-              ),
-            ],
-          ),
+            ),
+            Divider()
+          ],
         );
       },
     );

@@ -14,7 +14,7 @@ class CompanyProfile  extends StatelessWidget {
         appBar: AppBar(
           title: Text(AppStrings.companyProfile),
           actions: [
-            Image.asset(ImageConstant.imgLogo, width: 50.0,),
+            //Image.asset(ImageConstant.imgLogo, width: 50.0,),
           ],
         ),
         body: Center(

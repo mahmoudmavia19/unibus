@@ -39,8 +39,13 @@ class TripsManagementScreen extends StatelessWidget {
             ListTile(
               onTap: () => _showTrip(trip),
               leading: Text(trip.number??"",style: TextStyle(color: theme.primaryColor,fontSize: 16.0),),
-              title: Text(trip.enterGate??""),
-              subtitle: Text(DateFormat.yMMMd().format(trip.time!)),
+//              title: Text(trip.enterGate??""),
+              subtitle:Column(
+                 children: [
+                    _buildText(AppStrings.driver, trip.driver??""),
+                   _buildText(AppStrings.time, DateFormat.yMMMd().format(trip.time!)),
+                 ],
+              ),
               trailing: Row(
                 mainAxisSize: MainAxisSize.min,
                 children: [
@@ -71,7 +76,8 @@ class TripsManagementScreen extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              _buildText(AppStrings.location, trip.enterGate??""),
+              _buildText(AppStrings.tripEntryGate, trip.enterGate??""),
+              _buildText(AppStrings.tripExitGate, trip.exitGate??""),
               _buildText(AppStrings.driver, trip.driver??""),
               _buildText(AppStrings.time, DateFormat.yMMMd().format(trip.time!)),
              ],

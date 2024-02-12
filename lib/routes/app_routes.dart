@@ -3,11 +3,13 @@ import 'package:unibus/presentation/admin/admin_profile/binding/admin_profile_bi
 import 'package:unibus/presentation/admin/users_manage/users_manage_screen.dart';
 import 'package:unibus/presentation/comapny/drivers_management/binding/driver_binding.dart';
 import 'package:unibus/presentation/comapny/drivers_management/drivers_screen.dart';
+import 'package:unibus/presentation/comapny/drivers_rate/drivers_rate_screen.dart';
 import 'package:unibus/presentation/comapny/price_management/binding/price_binding.dart';
 import 'package:unibus/presentation/comapny/profile/binding/profile_binding.dart';
 import 'package:unibus/presentation/splash_screen/splash_screen.dart';
 import 'package:unibus/presentation/splash_screen/binding/splash_binding.dart';
 import 'package:get/get.dart';
+import 'package:unibus/presentation/switch_screen.dart';
 
 import '../presentation/admin/companies_management/companies_management_screen.dart';
  import '../presentation/comapny/chat_center/binding/chat_center_binding.dart';
@@ -28,6 +30,7 @@ class AppRoutes {
   static const String splashScreen = '/splash_screen';
 
   static const String initialRoute = '/initialRoute';
+  static const String switchScreen = '/SwitchScreen';
   static const String adminProfileScreen = '/admin/adminProfileScreen';
   static const String adminUsersManagementScreen = '/admin/adminUsersManagementScreen';
   static const String adminCompaniesManagementScreen = '/admin/adminCompaniesManagementScreen';
@@ -43,7 +46,7 @@ class AppRoutes {
   static const String companyChatCenter = '/company/companyChatCenter';
   static const String companyChatRoom = '/company/companyChatRoom';
   static const String companyLiveTrip = '/company/companyLiveTrip';
-
+  static const String companyDriversRatingScreen = '/company/companyDriversRatingScreen';
 
   static List<GetPage> pages = [
     GetPage(
@@ -122,6 +125,15 @@ class AppRoutes {
       name: companyLiveTrip,
       page: () => LiveTripScreen(),
       binding: LiveTripBinding(),
+    ),
+    GetPage(
+      name: switchScreen,
+      page: () => SwitchScreen(),
+    ),
+    GetPage(
+      name: companyDriversRatingScreen,
+      page: () => DriversRateScreen(),
+      binding: DriversBinding(),
     )
   ];
 }

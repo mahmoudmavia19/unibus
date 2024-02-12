@@ -103,11 +103,18 @@ class ThemeHelper {
           color: colorScheme.primary
         ),
       ) ,
+      listTileTheme: ListTileThemeData(
+        titleTextStyle: TextStyle(fontSize: 20 .fSize,fontFamily: 'Inter',color: Colors.black),
+        subtitleTextStyle: TextStyle(fontSize: 16 .fSize,fontFamily: 'Inter',color: Colors.black),
+      ),
       dividerTheme: DividerThemeData(
         thickness: 1,
         space: 1,
-        color: appTheme.blue50,
+        color:Colors.black26,
       ),
+      tabBarTheme: TabBarTheme(
+        dividerColor: Colors.black26
+      )
     );
   }
 

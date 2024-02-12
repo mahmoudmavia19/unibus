@@ -18,8 +18,8 @@ class ChatCenterController extends GetxController {
     // In a real application, you would fetch chats from an API or database
     // For demonstration purposes, let's add some dummy data
     chats.assignAll([
-      ChatModel(title: 'Chat Room 1', lastMessage: 'Hello!', lastMessageTime: DateTime.now()),
-      ChatModel(title: 'Chat Room 2', lastMessage: 'Hi there!' , lastMessageTime: DateTime.now()),
+      ChatModel(title: 'Test User 1 ', lastMessage: 'Hello!', lastMessageTime: DateTime.now()),
+      ChatModel(title: 'Test User  2', lastMessage: 'Hi there!' , lastMessageTime: DateTime.now()),
       // Add more chat rooms if needed
     ]);
   }

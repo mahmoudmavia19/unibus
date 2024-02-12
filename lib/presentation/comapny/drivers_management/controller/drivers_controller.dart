@@ -7,13 +7,13 @@ import '../../../../core/app_export.dart';
  import '../model/driver.dart';
 
 class DriverController extends GetxController {
-   Rx<FlowState> state = Rx<FlowState>(EmptyState(''));
+   Rx<FlowState> state = Rx<FlowState>(ContentState());
    final GlobalKey<FormState> addFormKey = GlobalKey<FormState>();
    final GlobalKey<FormState> editFormKey = GlobalKey<FormState>();
-  var drivers =[];/* <Driver>[
+  var drivers = <Driver>[
     Driver(name: 'Driver1', address: 'Address 1', phone: '0534567890', email: 'driver1@example.com', password: 'password1'),
     Driver(name: 'Driver2', address: 'Address 2', phone: '0576543210', email: 'driver2@example.com', password: 'password2'),
-  ].obs;*/
+  ].obs  ;
 
   void addDriver(Driver driver) {
     state.value = LoadingState(stateRendererType: StateRendererType.fullScreenLoadingState);

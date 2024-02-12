@@ -47,7 +47,7 @@ class StudentRequestScreen extends StatelessWidget {
     return Scaffold(
       drawer: CompanyDrawer(),
       appBar: AppBar(
-        title: Text(AppStrings.StudentsRequests), // Utilizing AppStrings
+        title: Text(AppStrings.Requests), // Utilizing AppStrings
         actions: [
           Image.asset(
             ImageConstant.imgLogo,
@@ -55,62 +55,132 @@ class StudentRequestScreen extends StatelessWidget {
           ),
         ],
       ),
-      body: ListView.builder(
-        itemCount: userRequests.length,
-        itemBuilder: (context, index) {
-          final userRequest = userRequests[index];
-          return Column(
-            children: [
-              ListTile(
-                title: Text(
-                  userRequest.username,
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    color: Theme.of(context).primaryColor,
-                  ),
-                ),
-                subtitle: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text('${AppStrings.email}: ${userRequest.email}'),
-                    Text('${AppStrings.phone}: ${userRequest.phone}'),
-                    Text('${AppStrings.address}: ${userRequest.address}'),
-                    Text('${AppStrings.status}: ${userRequest.accepted ? AppStrings.accepted : AppStrings.rejected}'),
-                  ],
-                ),
-                // You can add more actions if needed
-                trailing: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    IconButton(
-                      icon: Icon(Icons.check, color: Colors.green), // or any other appropriate icon
-                      onPressed: () {
-                        // Implement logic for accepting user request
-                      },
-                    ),
-                    IconButton(
-                      icon: Icon(Icons.close, color: Colors.red), // or any other appropriate icon
-                      onPressed: () {
-                        // Implement logic for rejecting user request
-                      },
-                    ),
-                    IconButton(
-                      icon: Icon(Icons.payment, color: Colors.blue), // Payment information button
-                      onPressed: () {
-                        // Show payment information dialog
-                        _showPaymentInfoDialog(context, userRequest);
-                      },
-                    ),
-                  ],
-                ),
-              ),
-              Divider()
-            ],
-          );
-        },
-      ),
+      body:DefaultTabController(length: 2, child:Column(
+        children: [
+          TabBar(tabs:[
+            Tab(text: AppStrings.student,),
+            Tab(text: AppStrings.employee,),
+          ]),
+          Expanded(
+            child: TabBarView(children: [
+              _tab1(),
+              _tab2(),
+            ])
+          )
+        ]
+      ))
     );
   }
+
+  _tab1()=> ListView.builder(
+    itemCount: userRequests.length,
+    itemBuilder: (context, index) {
+      final userRequest = userRequests[index];
+      return Column(
+        children: [
+          ListTile(
+            title: Text(
+              userRequest.username,
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                color: Theme.of(context).primaryColor,
+              ),
+            ),
+            subtitle: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text('${AppStrings.email}: ${userRequest.email}'),
+                Text('${AppStrings.phone}: ${userRequest.phone}'),
+                Text('${AppStrings.address}: ${userRequest.address}'),
+                Text('${AppStrings.status}: ${userRequest.accepted ? AppStrings.accepted : AppStrings.rejected}'),
+              ],
+            ),
+            // You can add more actions if needed
+            trailing: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                IconButton(
+                  icon: Icon(Icons.check, color: Colors.green), // or any other appropriate icon
+                  onPressed: () {
+                    // Implement logic for accepting user request
+                  },
+                ),
+                IconButton(
+                  icon: Icon(Icons.close, color: Colors.red), // or any other appropriate icon
+                  onPressed: () {
+                    // Implement logic for rejecting user request
+                  },
+                ),
+                IconButton(
+                  icon: Icon(Icons.payment, color: Colors.blue), // Payment information button
+                  onPressed: () {
+                    // Show payment information dialog
+                    _showPaymentInfoDialog(context, userRequest);
+                  },
+                ),
+              ],
+            ),
+          ),
+          Divider()
+        ],
+      );
+    },
+  );
+  _tab2()=> ListView.builder(
+    itemCount: userRequests.length,
+    itemBuilder: (context, index) {
+      final userRequest = userRequests[index];
+      return Column(
+        children: [
+          ListTile(
+            title: Text(
+              userRequest.username,
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                color: Theme.of(context).primaryColor,
+              ),
+            ),
+            subtitle: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text('${AppStrings.email}: ${userRequest.email}'),
+                Text('${AppStrings.phone}: ${userRequest.phone}'),
+                Text('${AppStrings.address}: ${userRequest.address}'),
+                Text('${AppStrings.status}: ${userRequest.accepted ? AppStrings.accepted : AppStrings.rejected}'),
+              ],
+            ),
+            // You can add more actions if needed
+            trailing: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                IconButton(
+                  icon: Icon(Icons.check, color: Colors.green), // or any other appropriate icon
+                  onPressed: () {
+                    // Implement logic for accepting user request
+                  },
+                ),
+                IconButton(
+                  icon: Icon(Icons.close, color: Colors.red), // or any other appropriate icon
+                  onPressed: () {
+                    // Implement logic for rejecting user request
+                  },
+                ),
+                IconButton(
+                  icon: Icon(Icons.payment, color: Colors.blue), // Payment information button
+                  onPressed: () {
+                    // Show payment information dialog
+                    _showPaymentInfoDialog(context, userRequest);
+                  },
+                ),
+              ],
+            ),
+          ),
+          Divider()
+        ],
+      );
+    },
+  );
+
 
   // Method to show payment information dialog
   void _showPaymentInfoDialog(BuildContext context, UserRequest userRequest) {

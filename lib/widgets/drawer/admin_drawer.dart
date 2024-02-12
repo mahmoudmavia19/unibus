@@ -24,7 +24,7 @@ class AdminDrawer extends StatelessWidget {
                 Get.toNamed(AppRoutes.adminCompaniesManagementScreen);
               }),
               _tab(Icons.logout,AppStrings.logout,(){
-                //Get.toNamed(AppRoutes.adminCompaniesManagementScreen);
+               Get.offAndToNamed(AppRoutes.switchScreen);
               }),
             ]
         )

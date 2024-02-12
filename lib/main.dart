@@ -23,11 +23,11 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         theme: theme,
         translations: AppLocalization(),
-        locale: Get.deviceLocale, //for setting localization strings
+        locale: Locale('en', 'US'), //for setting localization strings
         fallbackLocale: Locale('en', 'US'),
         title: 'UNIBUS',
         initialBinding: InitialBindings(),
-        initialRoute: AppRoutes.companyProfileScreen,
+        initialRoute: AppRoutes.initialRoute,
         getPages: AppRoutes.pages,
       );
     });

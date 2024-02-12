@@ -7,6 +7,7 @@ class CompanyDrawer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Drawer(
+      width: 320,
         child: ListView(
             children: [
               DrawerHeader(child: Image.asset(ImageConstant.imgLogo),
@@ -23,10 +24,13 @@ class CompanyDrawer extends StatelessWidget {
               _tab(Icons.person,AppStrings.driversManagement,(){
                 Get.offAllNamed(AppRoutes.companyDriversManagementScreen);
               }),
+              _tab(Icons.star_rate,AppStrings.driversRateTitle,(){
+                Get.offAllNamed(AppRoutes.companyDriversRatingScreen);
+              }),
               _tab(Icons.mode_of_travel,AppStrings.tripsManagement,(){
                 Get.offAllNamed(AppRoutes.companyTripManagementScreen);
               }),
-              _tab(Icons.supervised_user_circle_sharp,AppStrings.StudentsRequests,(){
+              _tab(Icons.supervised_user_circle_sharp,AppStrings.Requests,(){
                 Get.offAllNamed(AppRoutes.companyStudentRequestScreen);
               }),
               _tab(Icons.chat_bubble,AppStrings.chatCenter,(){
@@ -36,7 +40,7 @@ class CompanyDrawer extends StatelessWidget {
                 Get.offAllNamed(AppRoutes.companyLiveTrip);
               }),
               _tab(Icons.logout,AppStrings.logout,(){
-                //Get.toNamed(AppRoutes.adminCompaniesManagementScreen);
+                Get.offAndToNamed(AppRoutes.switchScreen);
               }),
             ]
         )
@@ -46,8 +50,8 @@ class CompanyDrawer extends StatelessWidget {
   _tab(icon,title,action)=> Column(
     children: [
       ListTile(
-        leading: Icon(icon,color: theme.primaryColor,) ,
-        title: Text(title),
+        leading: Icon(icon,color: theme.primaryColor,size: 30,) ,
+        title: Text(title,style: TextStyle(fontSize: 18.0,fontWeight: FontWeight.bold),),
         trailing: Icon(Icons.arrow_forward_ios),
         onTap: action,
       ),

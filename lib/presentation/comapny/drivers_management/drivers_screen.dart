@@ -50,10 +50,6 @@ class DriverManagementScreen extends StatelessWidget {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   IconButton(
-                    icon: Icon(Icons.rate_review),
-                    onPressed: () => _showRateDriver(context, index, driver),
-                  ),
-                  IconButton(
                     icon: Icon(Icons.edit),
                     onPressed: () => _editDriver(context, index, driver),
                   ),

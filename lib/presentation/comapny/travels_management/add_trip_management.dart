@@ -78,23 +78,25 @@ class AddTripScreen extends GetWidget<AddTripController> {
                 controller.trip.driver = value;
               }),
           SizedBox(height: 16.0),
-          Text(AppStrings.tripExitGate, style: Theme.of(context).textTheme.titleLarge),
-          SizedBox(height: 16.0),
-          TextFieldWidget(labelText: AppStrings.tripExitGate, controller: controller.tripExitGateController,
-          onTap: () {
-            _openMapSheet( controller.tripExitGateController,onTap: (p0) {
-              controller.trip.endLocation = p0;
-            },);
-          },),
-          SizedBox(height: 16.0),
           Text(AppStrings.tripEntryGate, style: Theme.of(context).textTheme.titleLarge),
           SizedBox(height: 16.0),
-          TextFieldWidget(labelText: AppStrings.tripEntryGate, controller: controller.tripEnterGateController,onTap: () {
+          TextFieldWidget(labelText: AppStrings.tripEntryGate, controller: controller.tripEnterGateController,
+            /*onTap: () {
             _openMapSheet( controller.tripEnterGateController,onTap: (p0) {
               controller.trip.startLocation = p0;
             });
-          },),
+          },*/),
+
           SizedBox(height: 16.0),
+          Text(AppStrings.tripExitGate, style: Theme.of(context).textTheme.titleLarge),
+          SizedBox(height: 16.0),
+          TextFieldWidget(labelText: AppStrings.tripExitGate,
+            controller: controller.tripExitGateController,
+         /* onTap: () {
+            _openMapSheet( controller.tripExitGateController,onTap: (p0) {
+              controller.trip.endLocation = p0;
+            },);
+          },*/),
 
           SizedBox(height: 16.0),
           SizedBox(
