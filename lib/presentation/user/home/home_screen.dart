@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:unibus/core/app_export.dart';
+import 'package:unibus/presentation/comapny/chat_center/model/chat_model.dart';
 
 class HomeScreen  extends StatelessWidget {
   @override
@@ -14,7 +15,9 @@ class HomeScreen  extends StatelessWidget {
                  title: Row(
                    children: [
                      Expanded(child: Text('Company $index',style: TextStyle(fontWeight: FontWeight.bold,color:theme.primaryColor),)),
-                     IconButton(onPressed: (){}, icon: Icon(Icons.chat_bubble,color: theme.primaryColor,))
+                     IconButton(onPressed: (){
+                       Get.toNamed(AppRoutes.companyChatRoom,arguments: ChatModel(title: 'title', lastMessage: 'lastMessage', lastMessageTime: DateTime.now()));
+                     }, icon: Icon(Icons.chat_bubble,color: theme.primaryColor,))
                    ],
                  ),
                  subtitle: Column(
@@ -42,7 +45,9 @@ class HomeScreen  extends StatelessWidget {
                          SizedBox(width: 10.0,),
                          Text('${index+1} Trip'),
                          Spacer(),
-                         TextButton(onPressed: (){}, child: Row(
+                         TextButton(onPressed: (){
+                           Get.toNamed(AppRoutes.userCompanyDistrictsScreen);
+                         }, child: Row(
                            mainAxisSize: MainAxisSize.min,
                            children: [
                              Text('Booking Now',style: TextStyle(fontSize: 16.0),),

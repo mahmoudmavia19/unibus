@@ -1,3 +1,5 @@
+import 'package:flutter/foundation.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:unibus/core/app_export.dart';
@@ -22,6 +24,11 @@ class MapTripScreen extends GetWidget<MapTripController> {
       ),
       body: Obx(
             () => GoogleMap(
+              gestureRecognizers: {
+                Factory<OneSequenceGestureRecognizer>(
+                      () => EagerGestureRecognizer(),
+                )
+              } ,
           mapType: MapType.terrain,
           myLocationEnabled: true,
           circles: {

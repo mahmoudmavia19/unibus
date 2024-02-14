@@ -10,13 +10,6 @@ class UserProfileScreen  extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Obx(()=>Scaffold(
-        drawer: CompanyDrawer(),
-        appBar: AppBar(
-          title: Text(AppStrings.companyProfile),
-          actions: [
-            //Image.asset(ImageConstant.imgLogo, width: 50.0,),
-          ],
-        ),
         body: Center(
           child: SingleChildScrollView(
             padding: EdgeInsets.all(20.0),
@@ -24,7 +17,7 @@ class UserProfileScreen  extends StatelessWidget {
               children: [
                 Image.asset(ImageConstant.imgLogo, width: 150,),
                 SizedBox(height: 30.0,),
-                _buildTextFormField(AppStrings.companyName, Icons.business,readOnly: !controller.isEditMode.value),
+                _buildTextFormField(AppStrings.name, Icons.person,readOnly: !controller.isEditMode.value),
                 _buildTextFormField(AppStrings.email, Icons.email),
                 _buildTextFormField(AppStrings.phone, Icons.phone,readOnly: !controller.isEditMode.value),
                 _buildTextFormFieldPassword(AppStrings.password, Icons.lock,readOnly:!controller.isEditMode.value),

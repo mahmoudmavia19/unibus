@@ -15,4 +15,5 @@ class AppLottie {
  static String BusLoading = 'assets/json/BusLoading.json';
  static String BusSuccess = 'assets/json/BusSuccess.json';
  static String empty = 'assets/json/empty.json';
+ static String free = 'assets/json/free.json';
 }

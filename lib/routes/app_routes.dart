@@ -10,6 +10,10 @@ import 'package:unibus/presentation/splash_screen/splash_screen.dart';
 import 'package:unibus/presentation/splash_screen/binding/splash_binding.dart';
 import 'package:get/get.dart';
 import 'package:unibus/presentation/switch_screen.dart';
+import 'package:unibus/presentation/user/company_district/binding/company_district_binding.dart';
+import 'package:unibus/presentation/user/company_district/company_district.dart';
+import 'package:unibus/presentation/user/company_trips/binding/company_trip_binding.dart';
+import 'package:unibus/presentation/user/company_trips/company_trips_screen.dart';
 import 'package:unibus/presentation/user/main/binding/user_main_binding.dart';
 import 'package:unibus/presentation/user/main/main_screen.dart';
 import 'package:unibus/presentation/user/user_profile/binding/user_profile_binding.dart';
@@ -29,6 +33,7 @@ import '../presentation/comapny/travels_management/add_trip_management.dart';
 import '../presentation/comapny/travels_management/binding/travels_binding.dart';
 import '../presentation/comapny/travels_management/ediy_trip_screen.dart';
 import '../presentation/comapny/travels_management/tervels_screen.dart';
+import '../presentation/user/payment_screen/payment_screen.dart';
 
 class AppRoutes {
   static const String splashScreen = '/splash_screen';
@@ -54,6 +59,9 @@ class AppRoutes {
   // user routes
   static const String userProfileScreen = '/user/userProfileScreen';
   static const String userMain = '/user/userMain';
+  static const String userCompanyTripsScreen = '/user/userCompanyTripsScreen';
+  static const String userCompanyDistrictsScreen = '/user/userCompanyDistrictsScreen';
+  static const String userPaymentScreen = '/user/userPaymentScreen';
 
 
   static List<GetPage> pages = [
@@ -153,6 +161,21 @@ class AppRoutes {
       name: userMain,
       page: () => MainScreen(),
       binding: UserMainBinding(),
-    )
-  ];
+    ),
+    GetPage (
+      name: userCompanyTripsScreen,
+      page: () => CompanyTripScreen(),
+      binding: CompanyTripsBinding()
+    ),
+    GetPage(
+      name: userCompanyDistrictsScreen,
+      page: () => CompanyDistrictScreen(),
+      binding: CompanyDistrictBinding(),
+    ),
+    GetPage(
+      name: userPaymentScreen,
+      page: () => PaymentScreen(),
+
+    ),
+   ];
 }
