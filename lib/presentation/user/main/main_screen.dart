@@ -30,7 +30,8 @@ class MainScreen extends GetWidget<UserMainController> {
          HomeScreen(),
           MapTripScreen(),
           NotificationScreen(),
-          HistoryScreen()
+          HistoryScreen(),
+          UserProfileScreen(),
         ],
         onPageChanged: (value) {
           controller.changeIndex(value);
@@ -42,6 +43,7 @@ class MainScreen extends GetWidget<UserMainController> {
               BottomNavigationBarItem(icon: Icon(Icons.map_outlined), label: 'Map'),
               BottomNavigationBarItem(icon: Icon(Icons.notifications), label: 'Notifications'),
               BottomNavigationBarItem(icon: Icon(Icons.reviews), label: 'Reviews'),
+              BottomNavigationBarItem(icon: Icon(Icons.settings), label: 'Settings'),
             ],
             currentIndex: controller.selectedIndex.value,
             onTap: (index){

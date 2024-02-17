@@ -18,29 +18,32 @@ class CompanyDistrictScreen extends StatelessWidget {
       ),
       body: Column(
         children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Stack(
-                alignment: Alignment.bottomLeft,
-                children: [
-                  Lottie.asset(AppLottie.free,width: 100) ,
-                  Padding(
-                    padding: const EdgeInsets.only(left: 30.0,bottom: 10.0),
-                    child: Text('Two Days Free',style:TextStyle(color: theme.primaryColor,fontSize: 20.0,fontWeight: FontWeight.bold),),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(left: 100.0,bottom: 40.0),
-                    child: SlideCountdownSeparated(
-                      duration: const Duration(days: 2),
-                      decoration: BoxDecoration(
-                          color: theme.primaryColor
-                      ),
+          Container(
+            color: PrimaryColors().primary2,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Stack(
+                  alignment: Alignment.bottomLeft,
+                  children: [
+                    Lottie.asset(AppLottie.free,width: 100) ,
+                    Padding(
+                      padding: const EdgeInsets.only(left: 30.0,bottom: 10.0),
+                      child: Text('Two Days Free',style:TextStyle(color: theme.primaryColor,fontSize: 20.0,fontWeight: FontWeight.bold),),
                     ),
-                  )
-                ],
-              ),
-            ],
+                    Padding(
+                      padding: const EdgeInsets.only(left: 100.0,bottom: 40.0),
+                      child: SlideCountdownSeparated(
+                        duration: const Duration(days: 2),
+                        decoration: BoxDecoration(
+                            color: theme.primaryColor
+                        ),
+                      ),
+                    )
+                  ],
+                ),
+              ],
+            ),
           ),
           Container(
             padding:EdgeInsets.all(20) ,

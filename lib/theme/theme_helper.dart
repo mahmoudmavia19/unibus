@@ -112,8 +112,16 @@ class ThemeHelper {
         space: 1,
         color:Colors.black26,
       ),
+      textButtonTheme: TextButtonThemeData(
+        style: TextButton.styleFrom(
+          foregroundColor: PrimaryColors().primary2
+        )
+      ),
       tabBarTheme: TabBarTheme(
         dividerColor: Colors.black26
+      ),
+      floatingActionButtonTheme: FloatingActionButtonThemeData(
+        backgroundColor: PrimaryColors().primary2
       )
     );
   }
@@ -214,6 +222,7 @@ class PrimaryColors {
 
   // Yellow
   Color get yellow700 => Color(0XFFFFC732);
+  Color get primary2 => Color(0xFFF7B807);
 }
 
 /// Class containing custom colors for a secondary theme.

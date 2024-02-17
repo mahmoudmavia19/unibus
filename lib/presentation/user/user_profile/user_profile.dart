@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:unibus/core/app_export.dart';
 import 'package:unibus/core/utils/app_strings.dart';
-
-import '../../../widgets/drawer/comapnyDrawer.dart';
 import 'controller/user_profile_controller.dart';
 
 class UserProfileScreen  extends StatelessWidget {
@@ -10,7 +8,7 @@ class UserProfileScreen  extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Obx(()=>Scaffold(
-        body: Center(
+         body: Center(
           child: SingleChildScrollView(
             padding: EdgeInsets.all(20.0),
             child: Column(

@@ -14,7 +14,7 @@ class HistoryScreen extends StatelessWidget {
           return Column(
             children: [
               ListTile(
-                leading: Icon(Icons.bus_alert_outlined,size: 30,color: theme.primaryColor,),
+                leading: Icon(Icons.bus_alert_outlined,size: 30,color:PrimaryColors().primary2,),
                 title: Text('Driver name',style: TextStyle(color: theme.primaryColor,fontWeight: FontWeight.bold),),
                 subtitle: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,

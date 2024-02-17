@@ -16,13 +16,13 @@ class SwitchScreen extends StatelessWidget {
             Image.asset(ImageConstant.imgLogo,height: 100.adaptSize,width: 100.adaptSize,),
             TextButton(onPressed: (){
               Get.toNamed(AppRoutes.adminProfileScreen);
-            }, child: Text('Admin')),
+            }, child: Text('Admin',style: TextStyle(fontSize: 20.0),)),
             TextButton(onPressed: (){
               Get.toNamed(AppRoutes.companyProfileScreen);
-            }, child: Text('Company')),
+            }, child: Text('Company',style: TextStyle(fontSize: 20.0),)),
             TextButton(onPressed: (){
               Get.offAndToNamed(AppRoutes.userMain);
-            }, child: Text('User')),
+            }, child: Text('User',style: TextStyle(fontSize: 20.0),)),
           ]
         ),
       )

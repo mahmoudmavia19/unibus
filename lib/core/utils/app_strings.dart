@@ -67,6 +67,7 @@ class AppStrings {
   static const String liveTrip = 'Live Trips';
   static const String student = 'Students';
   static const String employee = 'Employees';
+  static const String userProfile  = 'User Profile';
 
 
 
