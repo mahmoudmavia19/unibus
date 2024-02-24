@@ -5,14 +5,18 @@ class AppStrings {
   static const String email = 'Email';
   static const String password = 'Password';
   static const String login = 'Login';
+  static const String company= 'Company';
+  static const String send = 'Send';
   static const String save = 'Save';
   static const String userManagement ='Users Management' ;
   static const String userId = 'User ID';
   static const String name = 'Name';
+  static const String Company = 'Company';
   static const String address = 'Address';
   static const String phone = 'Phone';
   static const String emailId = 'Email ID';
   static const String password1 = 'Password';
+  static const String cPassword = 'Confirm Password';
   static const String companyManagement = 'Company Management';
   static const String companyProfile = 'Company Profile';
   static const String companyId = 'Company ID';
@@ -68,6 +72,10 @@ class AppStrings {
   static const String student = 'Students';
   static const String employee = 'Employees';
   static const String userProfile  = 'User Profile';
+  static const String user = 'User';
+  static const String admin = 'Admin';
+  static const String register = 'Register' ;
+  static const String forgetPassword = 'Forget Password';
 
 
 

@@ -13,19 +13,40 @@ class SwitchScreen extends StatelessWidget {
         child:Column(
           mainAxisAlignment:MainAxisAlignment.center ,
           children: [
-            Image.asset(ImageConstant.imgLogo,height: 100.adaptSize,width: 100.adaptSize,),
-            TextButton(onPressed: (){
-              Get.toNamed(AppRoutes.adminProfileScreen);
+            Image.asset(ImageConstant.imgLogo,height: 150.adaptSize,width: 150.adaptSize,),
+            SizedBox(height: 20.0,),
+            _button(onPressed: (){
+              Get.toNamed(AppRoutes.adminLoginScreen);
             }, child: Text('Admin',style: TextStyle(fontSize: 20.0),)),
-            TextButton(onPressed: (){
-              Get.toNamed(AppRoutes.companyProfileScreen);
+            _button(onPressed: (){
+              Get.toNamed(AppRoutes.companyLoginScreen);
             }, child: Text('Company',style: TextStyle(fontSize: 20.0),)),
-            TextButton(onPressed: (){
-              Get.offAndToNamed(AppRoutes.userMain);
-            }, child: Text('User',style: TextStyle(fontSize: 20.0),)),
+            _button(onPressed: (){
+              Get.toNamed(AppRoutes.userLoginScreen);
+              }, child: Text('User',style: TextStyle(fontSize: 20.0),)),
+            _button(onPressed: (){
+              Get.toNamed(AppRoutes.driverLoginScreen);
+
+            }, child: Text('Driver',style: TextStyle(fontSize: 20.0),)),
           ]
         ),
       )
+    );
+  }
+
+  _button({required VoidCallback onPressed,required Widget child}){
+    return Padding(
+      padding: const EdgeInsets.only(top: 20.0),
+      child: SizedBox(
+        width: 150.0,
+        child: ElevatedButton(
+          onPressed: onPressed,
+          child: Padding(
+            padding: const EdgeInsets.all(10.0),
+            child: child,
+          )
+        ),
+      ),
     );
   }
 }
