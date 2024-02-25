@@ -17,7 +17,12 @@ class HomeScreen  extends StatelessWidget {
                      Expanded(child: Text('Company $index',style: TextStyle(fontWeight: FontWeight.bold,color:theme.primaryColor),)),
                      IconButton(onPressed: (){
                        Get.toNamed(AppRoutes.companyChatRoom,arguments: ChatModel(title: 'title', lastMessage: 'lastMessage', lastMessageTime: DateTime.now()));
-                     }, icon: Icon(Icons.chat_bubble,color: theme.primaryColor,))
+                     }, icon: Row(
+                       children: [
+                         Icon(Icons.chat_bubble,color: theme.primaryColor,),
+                         Text('Chat',style: TextStyle(color: theme.primaryColor,fontWeight: FontWeight.bold),)
+                       ],
+                     ))
                    ],
                  ),
                  subtitle: Column(

@@ -19,7 +19,6 @@ class CompanyDistrictScreen extends StatelessWidget {
       body: Column(
         children: [
           Container(
-            color: PrimaryColors().primary2,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -86,6 +85,7 @@ class CompanyDistrictScreen extends StatelessWidget {
                                   }, child: Text('Show Trips',style: TextStyle(fontSize: 16.0),))
                                 ],
                               ),
+                              SizedBox(height: 10.0,),
                             ]
                         )
                     )
