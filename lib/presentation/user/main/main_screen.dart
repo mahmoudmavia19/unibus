@@ -16,9 +16,6 @@ class MainScreen extends GetWidget<UserMainController> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        leading:IconButton(onPressed: (){
-          Get.toNamed(AppRoutes.userProfileScreen);
-        }, icon: Icon(Icons.settings)),
         title: Text(AppStrings.appName),
         actions: [
           Image.asset(ImageConstant.imgLogo),

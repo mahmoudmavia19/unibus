@@ -28,7 +28,25 @@ class UserProfileScreen  extends StatelessWidget {
                       child: ElevatedButton(onPressed: () {
                         // Save company profile logic
                       }, child: Text(AppStrings.save))),
-                )
+                ) ,
+                SizedBox(
+                  width: 150.0,
+                  child: TextButton(onPressed: (){
+                    Get.offAndToNamed(AppRoutes.switchScreen);
+                  },
+                      style: TextButton.styleFrom(
+                        backgroundColor: Colors.red,
+                         foregroundColor: Colors.white
+                      ),
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Icon(Icons.logout),
+                          Text('Logout',style: TextStyle(fontSize: 16.0,fontWeight: FontWeight.bold),),
+                        ],
+                      )),
+                ),
+
               ],
             ),
           ),
