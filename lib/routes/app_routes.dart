@@ -2,6 +2,7 @@ import 'package:unibus/presentation/admin/admin_profile/admin_profile_screen.dar
 import 'package:unibus/presentation/admin/admin_profile/binding/admin_profile_binding.dart';
 import 'package:unibus/presentation/admin/auth/login/admin_login_screen.dart';
 import 'package:unibus/presentation/admin/users_manage/users_manage_screen.dart';
+import 'package:unibus/presentation/anther_screen/login_register.dart';
 import 'package:unibus/presentation/comapny/auth/login/binding/company_login_binding.dart';
 import 'package:unibus/presentation/comapny/auth/login/company_login_screen.dart';
 import 'package:unibus/presentation/comapny/auth/register/company_register_screen.dart';
@@ -12,10 +13,12 @@ import 'package:unibus/presentation/comapny/price_management/binding/price_bindi
 import 'package:unibus/presentation/comapny/profile/binding/profile_binding.dart';
 import 'package:unibus/presentation/driver/home/binding/home_binding.dart';
 import 'package:unibus/presentation/driver/home/home_screen.dart';
+import 'package:unibus/presentation/driver/trips_table/binding/trips_table_binding.dart';
+import 'package:unibus/presentation/driver/trips_table/trips_table_screen.dart';
 import 'package:unibus/presentation/splash_screen/splash_screen.dart';
 import 'package:unibus/presentation/splash_screen/binding/splash_binding.dart';
 import 'package:get/get.dart';
-import 'package:unibus/presentation/switch_screen.dart';
+import 'package:unibus/presentation/anther_screen/switch_screen.dart';
 import 'package:unibus/presentation/user/auth/forget_password/binding/forget_password_binding.dart';
 import 'package:unibus/presentation/user/auth/forget_password/forget_password_screen.dart';
 import 'package:unibus/presentation/user/auth/login/user_login_screen.dart';
@@ -30,6 +33,7 @@ import 'package:unibus/presentation/user/user_profile/binding/user_profile_bindi
 import 'package:unibus/presentation/user/user_profile/user_profile.dart';
 import '../presentation/admin/auth/login/binding/admin_login_binding.dart';
 import '../presentation/admin/companies_management/companies_management_screen.dart';
+import '../presentation/anther_screen/onboarding.dart';
 import '../presentation/comapny/auth/register/binding/company_register_binding.dart';
 import '../presentation/comapny/chat_center/binding/chat_center_binding.dart';
 import '../presentation/comapny/chat_center/chat_center_screen.dart';
@@ -55,6 +59,8 @@ class AppRoutes {
 
   static const String initialRoute = '/initialRoute';
   static const String switchScreen = '/SwitchScreen';
+  static const String onboardingScreen = '/OnBoardingScreen';
+  static const String loginOrRegisterScreen = '/loginOrRegisterScreen';
   static const String adminProfileScreen = '/admin/adminProfileScreen';
   static const String adminUsersManagementScreen = '/admin/adminUsersManagementScreen';
   static const String adminCompaniesManagementScreen = '/admin/adminCompaniesManagementScreen';
@@ -87,6 +93,7 @@ class AppRoutes {
   static const String driverLoginScreen = '/driver/driverLoginScreen';
   static const String driverRegisterScreen = '/driver/driverRegisterScreen';
   static const String driverHomeScreen = '/driver/driverHomeScreen';
+  static const String driverTripsTableScreen = '/driver/driverTripsTableScreen';
 
 
   static List<GetPage> pages = [
@@ -110,6 +117,10 @@ class AppRoutes {
       bindings: [
         SplashBinding(),
       ],
+    ),
+    GetPage(
+      name: loginOrRegisterScreen,
+      page: () => LoginOrRegister(),
     ),
     GetPage (
       name: adminProfileScreen,
@@ -247,5 +258,13 @@ class AppRoutes {
       page: () => DriverHomeScreen(),
       binding: DriverHomeBinding()
      ),
+    GetPage(name: onboardingScreen,
+        page: () => OnBoardingScreen(),
+    ),
+    GetPage(
+      name: driverTripsTableScreen,
+      page: () => TripsTableScreen(),
+      binding: TripsTableBinding(),
+    )
    ];
 }

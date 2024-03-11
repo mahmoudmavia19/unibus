@@ -41,8 +41,7 @@ class EditTripController extends GetxController {
   @override
   void onInit() {
     tripNumberController = TextEditingController(text: trip.number);
-     tripDateTimeController = TextEditingController(text: DateFormat.yMMMd().format(trip.time!));
-    tripExitGateController = TextEditingController(text: trip.exitGate);
+     tripExitGateController = TextEditingController(text: trip.exitGate);
     tripEnterGateController = TextEditingController(text: trip.enterGate);
     _getCurrentLocation();
     super.onInit();

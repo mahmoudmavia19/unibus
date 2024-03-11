@@ -43,7 +43,7 @@ class TripsManagementScreen extends StatelessWidget {
               subtitle:Column(
                  children: [
                     _buildText(AppStrings.driver, trip.driver??""),
-                   _buildText(AppStrings.time, DateFormat.yMMMd().format(trip.time!)),
+                   _buildText(AppStrings.day, trip.days.toString()),
                  ],
               ),
               trailing: Row(
@@ -79,7 +79,7 @@ class TripsManagementScreen extends StatelessWidget {
               _buildText(AppStrings.tripEntryGate, trip.enterGate??""),
               _buildText(AppStrings.tripExitGate, trip.exitGate??""),
               _buildText(AppStrings.driver, trip.driver??""),
-              _buildText(AppStrings.time, DateFormat.yMMMd().format(trip.time!)),
+              _buildText(AppStrings.day, trip.days.toString()),
              ],
           ),
         ),

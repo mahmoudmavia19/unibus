@@ -1,3 +1,5 @@
+import 'package:day_picker/day_picker.dart';
+import 'package:day_picker/model/day_in_week.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -11,6 +13,38 @@ import '../../../core/constants/constant.dart';
 import 'controller/add_trip_controller.dart';
 
 class AddTripScreen extends GetWidget<AddTripController> {
+
+  List<DayInWeek> _days = [
+    DayInWeek(
+      "Sat",
+      dayKey: "Sat",
+    ),
+    DayInWeek(
+      "Sun",
+      dayKey: "Sun",
+
+    ),
+    DayInWeek(
+      "Mon",
+      dayKey: "Mon",
+    ),
+    DayInWeek(
+        "Tue",
+        isSelected: true,
+        dayKey: "Tue",
+    ),
+    DayInWeek(
+      "Wed",
+      dayKey: "Wed",
+    ),
+    DayInWeek(
+      "Thu",
+      dayKey: "Thu",
+    ),
+
+  ];
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -46,14 +80,30 @@ class AddTripScreen extends GetWidget<AddTripController> {
           SizedBox(height: 16.0),
           Text(AppStrings.day, style: Theme.of(context).textTheme.titleLarge,),
           SizedBox(height: 16.0),
-          TextFieldWidget(labelText: AppStrings.day, controller: controller.tripDateTimeController,readOnly: true,
-            onTap: (){
-              showDatePicker(context: context, firstDate:DateTime.now(),
-                  lastDate:DateTime.parse('2025-01-01')).then((value) {
-                controller.tripDateTimeController.text = DateFormat.yMMMd().format(value!);
-               controller.trip.time = value;
-              });
-            }),
+      SelectWeekDays(
+        fontSize: 14,
+        fontWeight: FontWeight.w500,
+        days: _days,
+        border: false,
+        boxDecoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(5.0),
+        color: theme.primaryColor
+        ),
+        onSelect: (values) { // <== Callback to handle the selected days
+          print(values);
+          controller.trip.days = values;
+        },
+      ),
+          SizedBox(height: 16.0),
+          Text(AppStrings.time, style: Theme.of(context).textTheme.titleLarge),
+          SizedBox(height: 16.0),
+          TextFieldWidget(labelText: AppStrings.time,
+              onTap: () {
+                showTimePicker(context: context, initialTime: TimeOfDay.now()).then((value) {
+                  controller.tripDateTimeController.text = value!.format(context);
+                });
+              },
+              controller: controller.tripDateTimeController),
           SizedBox(height: 16.0),
           Text(AppStrings.driver, style: Theme.of(context).textTheme.titleLarge),
           SizedBox(height: 16.0),

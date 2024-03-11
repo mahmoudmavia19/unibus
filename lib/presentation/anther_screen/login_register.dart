@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:unibus/core/app_export.dart';
 
-class SwitchScreen extends StatelessWidget {
+class LoginOrRegister extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Switch Screen'),
+        title: Text('Login Or Register'),
       ),
       body: Center(
         child:Column(
@@ -16,18 +16,11 @@ class SwitchScreen extends StatelessWidget {
             Image.asset(ImageConstant.imgLogo,height: 150.adaptSize,width: 150.adaptSize,),
             SizedBox(height: 20.0,),
             _button(onPressed: (){
-              Get.toNamed(AppRoutes.adminLoginScreen);
-            }, child: Text('Admin',style: TextStyle(fontSize: 20.0),)),
+              Get.toNamed(AppRoutes.switchScreen,arguments: true);
+            }, child: Text('Login',style: TextStyle(fontSize: 20.0),)),
             _button(onPressed: (){
-              Get.toNamed(AppRoutes.companyLoginScreen);
-            }, child: Text('Company',style: TextStyle(fontSize: 20.0),)),
-            _button(onPressed: (){
-              Get.toNamed(AppRoutes.userLoginScreen);
-              }, child: Text('User',style: TextStyle(fontSize: 20.0),)),
-            _button(onPressed: (){
-              Get.toNamed(AppRoutes.driverLoginScreen);
-
-            }, child: Text('Driver',style: TextStyle(fontSize: 20.0),)),
+              Get.toNamed(AppRoutes.switchScreen,arguments: false);
+            }, child: Text('Register',style: TextStyle(fontSize: 20.0),)),
           ]
         ),
       )

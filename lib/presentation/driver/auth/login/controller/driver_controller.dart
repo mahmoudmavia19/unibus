@@ -13,6 +13,6 @@ class DriverLoginController extends GetxController {
   }
 
   void login() async{
-     Get.toNamed(AppRoutes.driverHomeScreen);
+     Get.toNamed(AppRoutes.driverTripsTableScreen);
   }
 }

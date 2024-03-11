@@ -8,6 +8,12 @@ class ImageConstant {
   static String imageNotFound = 'assets/images/image_not_found.png';
   static String left_bottom = 'assets/images/left_bottom.png';
   static String right_bottom = 'assets/images/right_bottom.png';
+  static String bus = 'assets/images/bus.png';
+  static String map = 'assets/images/map.png';
+  static String notifications = 'assets/images/notifications.png';
+
+
+
 }
 
 class AppLottie {

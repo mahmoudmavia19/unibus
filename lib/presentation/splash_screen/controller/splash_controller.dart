@@ -13,7 +13,7 @@ class SplashController extends GetxController {
   @override
   void onInit() {
     Timer(Duration(seconds: 3), () {
-      Get.offAllNamed(AppRoutes.switchScreen);
+      Get.offAllNamed(AppRoutes.onboardingScreen);
     });
     super.onInit();
   }
