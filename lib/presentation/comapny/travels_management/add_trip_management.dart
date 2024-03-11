@@ -1,10 +1,8 @@
 import 'package:day_picker/day_picker.dart';
-import 'package:day_picker/model/day_in_week.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:intl/intl.dart';
 import 'package:unibus/core/utils/app_strings.dart';
 import 'package:unibus/core/utils/state_renderer/state_renderer_impl.dart';
 

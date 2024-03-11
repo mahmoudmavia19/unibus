@@ -1,9 +1,39 @@
+import 'package:day_picker/day_picker.dart';
+import 'package:day_picker/model/day_in_week.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:unibus/core/app_export.dart';
 
 class TripsTableScreen extends StatelessWidget {
+  List<DayInWeek> _days = [
+    DayInWeek(
+      "Sat",
+      dayKey: "Sat",
+    ),
+    DayInWeek(
+      "Sun",
+      dayKey: "Sun",
 
+    ),
+    DayInWeek(
+      "Mon",
+      dayKey: "Mon",
+    ),
+    DayInWeek(
+      "Tue",
+      isSelected: true,
+      dayKey: "Tue",
+    ),
+    DayInWeek(
+      "Wed",
+      dayKey: "Wed",
+    ),
+    DayInWeek(
+      "Thu",
+      dayKey: "Thu",
+    ),
+
+  ];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -16,6 +46,20 @@ class TripsTableScreen extends StatelessWidget {
       ),
       body: Column(
         children: [
+          SelectWeekDays(
+            fontSize: 14,
+            fontWeight: FontWeight.w500,
+            days: _days,
+            border: false,
+            boxDecoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(5.0),
+                color: theme.primaryColor
+            ),
+            onSelect: (values) { // <== Callback to handle the selected days
+              print(values);
+             },
+          ),
+          SizedBox(height: 16.0),
            Expanded(
             child: ListView.builder(
              itemBuilder: (context, index) => _itemBuilder(context, index),
@@ -38,7 +82,6 @@ class TripsTableScreen extends StatelessWidget {
               Text('enter gate : 12'),
               Text('exit gate : 23'),
               Text('time :${DateFormat.jm().format(DateTime.now().add(Duration(hours: index)))}'),
-              Text('days :[Tue, Sun, Thu]'),
             ],
           ),
           trailing:ElevatedButton(onPressed: () {
