@@ -1,29 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:unibus/core/app_export.dart';
 import 'package:unibus/core/utils/app_strings.dart';
+import 'package:unibus/core/utils/state_renderer/state_renderer_impl.dart';
+import 'package:unibus/presentation/admin/companies_management/controller/companies_controller.dart';
 
 import '../../../widgets/drawer/admin_drawer.dart';
 import 'model/company_model.dart';
 
 
-class CompanyManagementScreen extends StatelessWidget {
-  final List<Company> companies = [
-    Company(
-      companyId: '1',
-      name: 'Company A',
-      email: 'companya@example.com',
-      phone: '1234567890',
-      password: '********',
-    ),
-    Company(
-      companyId: '2',
-      name: 'Company B',
-      email: 'companyb@example.com',
-      phone: '9876543210',
-      password: '********',
-    ),
-    // Add more companies here as needed
-  ];
+class CompanyManagementScreen extends GetWidget<CompaniesController> {
+
 
   @override
   Widget build(BuildContext context) {
@@ -38,23 +24,28 @@ class CompanyManagementScreen extends StatelessWidget {
           ),
         ],
       ),
-      body: SingleChildScrollView(
-        padding: EdgeInsets.all(20.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: companies.map((company) {
-            return _buildCompanyCard(company: company);
-          }).toList(),
+      body: Obx(()=>SingleChildScrollView(
+          padding: EdgeInsets.all(20.0),
+          child: controller.state.value.getScreenWidget(_body(), (){
+            controller.getCompanies();
+          })
         ),
       ),
     );
   }
 
+  _body()=>Column(
+    crossAxisAlignment: CrossAxisAlignment.center,
+    children: controller.companies.map((company) {
+      return _buildCompanyCard(company: company);
+    }).toList(),
+  );
+
   Widget _buildCompanyCard({required Company company}) {
     return Card(
       child: ListTile(
         title: Text(
-          company.name,
+          company.name??'',
           style: TextStyle(
             color: theme.primaryColor,
             fontSize: 18.0,
@@ -63,16 +54,15 @@ class CompanyManagementScreen extends StatelessWidget {
         subtitle: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text('${AppStrings.companyId}: ${company.companyId}'),
+          //  Text('${AppStrings.companyId}: ${company.companyId}'),
             Text('${AppStrings.email}: ${company.email}'),
             Text('${AppStrings.phone}: ${company.phone}'),
-            Text('${AppStrings.password}: ${company.password}'),
-          ],
+           ],
         ),
         trailing: IconButton(
-          icon: Icon(Icons.block, color: Colors.red),
+          icon: company.blocked?Icon(Icons.remove_circle_outline, color: Colors.green):Icon(Icons.block, color: Colors.red),
           onPressed: () {
-            // Implement logic to block company
+            controller.blockCompany(company);
           },
         ),
       ),

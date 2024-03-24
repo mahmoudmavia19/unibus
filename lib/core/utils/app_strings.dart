@@ -15,6 +15,7 @@ class AppStrings {
   static const String address = 'Address';
   static const String phone = 'Phone';
   static const String emailId = 'Email ID';
+  static const String invalidName = 'Invalid Name';
   static const String password1 = 'Password';
   static const String cPassword = 'Confirm Password';
   static const String companyManagement = 'Company Management';
@@ -25,6 +26,7 @@ class AppStrings {
   static const String companyPhone = 'Company Phone';
   static const String companyPassword = 'Company Password';
   static const String logout = 'Logout';
+  static const String invalidEmail = 'Invalid Email';
   static const String yes = 'Yes';
   static const String no = 'No';
   static const String loading = 'Loading ...';
@@ -76,6 +78,11 @@ class AppStrings {
   static const String admin = 'Admin';
   static const String register = 'Register' ;
   static const String forgetPassword = 'Forget Password';
+  static const String noAdmin = 'You are not an admin';
+  static const String noDriver = 'You are not a driver';
+  static const String noCompany = 'You are not a company';
+  static const String passwordNotMatch = 'Password does not match';
+  static const String invalidPhone = 'Invalid Phone';
 
 
 

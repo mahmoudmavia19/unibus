@@ -7,6 +7,7 @@ class TextFieldWidget extends StatelessWidget {
   final bool obscureText;
   final Widget? suffixIcon;
 
+
   const TextFieldWidget({
     required this.labelText,
     required this.controller,
@@ -19,6 +20,12 @@ class TextFieldWidget extends StatelessWidget {
     return TextFormField(
       controller: controller,
       obscureText: obscureText,
+      validator: (value) {
+        if (value!.isEmpty) {
+          return 'Please enter $labelText';
+        }
+        return null;
+      },
       decoration: InputDecoration(
         labelText: labelText,
         border: OutlineInputBorder(

@@ -1,6 +1,7 @@
 import 'package:unibus/presentation/admin/admin_profile/admin_profile_screen.dart';
 import 'package:unibus/presentation/admin/admin_profile/binding/admin_profile_binding.dart';
 import 'package:unibus/presentation/admin/auth/login/admin_login_screen.dart';
+import 'package:unibus/presentation/admin/users_manage/binding/users_binding.dart';
 import 'package:unibus/presentation/admin/users_manage/users_manage_screen.dart';
 import 'package:unibus/presentation/anther_screen/login_register.dart';
 import 'package:unibus/presentation/comapny/auth/login/binding/company_login_binding.dart';
@@ -32,6 +33,7 @@ import 'package:unibus/presentation/user/main/main_screen.dart';
 import 'package:unibus/presentation/user/user_profile/binding/user_profile_binding.dart';
 import 'package:unibus/presentation/user/user_profile/user_profile.dart';
 import '../presentation/admin/auth/login/binding/admin_login_binding.dart';
+import '../presentation/admin/companies_management/binding/companies_binding.dart';
 import '../presentation/admin/companies_management/companies_management_screen.dart';
 import '../presentation/anther_screen/onboarding.dart';
 import '../presentation/comapny/auth/register/binding/company_register_binding.dart';
@@ -130,10 +132,12 @@ class AppRoutes {
     GetPage (
       name: adminUsersManagementScreen,
       page: () => UsersManagementScreen(),
+      binding: UsersBinding(),
      ),
     GetPage (
       name: adminCompaniesManagementScreen,
       page: () => CompanyManagementScreen(),
+      binding: CompaniesBinding(),
     ),
     // company routes
     GetPage (

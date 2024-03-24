@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:unibus/core/utils/state_renderer/state_renderer_impl.dart';
 import '../../../../core/app_export.dart';
 import '../../../../core/utils/app_strings.dart';
 import '../../../../widgets/custom_button.dart';
@@ -31,23 +32,28 @@ class LoginScreenUI extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Center(
-      child: SingleChildScrollView(
-        padding: EdgeInsets.symmetric(horizontal: 20.0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Image.asset(ImageConstant.imgLogo,width: 150,),
-             SizedBox(height: 30.0,),
-             TextFieldWidget(
-              labelText: AppStrings.email,
-              controller: loginController.emailController,
-            ),
-            SizedBox(height: 20),
-            ButtonWidget(onPressed:(){}, text:AppStrings.send,)
-           ],
+      child: Obx(()=>SingleChildScrollView(
+          padding: EdgeInsets.symmetric(horizontal: 20.0),
+          child: loginController.state.value.getScreenWidget(_body(), (){}),
         ),
       ),
     );
   }
+
+  _body()=>Column(
+    mainAxisAlignment: MainAxisAlignment.center,
+    children: <Widget>[
+      Image.asset(ImageConstant.imgLogo,width: 150,),
+      SizedBox(height: 30.0,),
+      TextFieldWidget(
+        labelText: AppStrings.email,
+        controller: loginController.emailController,
+      ),
+      SizedBox(height: 20),
+      ButtonWidget(onPressed:(){
+        loginController.forgetPassword();
+      }, text:AppStrings.send,)
+    ],
+  );
 }
 

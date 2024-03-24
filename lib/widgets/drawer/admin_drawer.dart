@@ -15,16 +15,16 @@ class AdminDrawer extends StatelessWidget {
                 ),
               ),
               _tab(Icons.person,AppStrings.adminProfile,(){
-                Get.toNamed(AppRoutes.adminProfileScreen);
+                Get.offAllNamed(AppRoutes.adminProfileScreen);
               }),
               _tab(Icons.supervised_user_circle_sharp,AppStrings.userManagement,(){
-                Get.toNamed(AppRoutes.adminUsersManagementScreen);
+                Get.offAllNamed(AppRoutes.adminUsersManagementScreen);
               }),
               _tab(Icons.work,AppStrings.companyManagement,(){
-                Get.toNamed(AppRoutes.adminCompaniesManagementScreen);
+                Get.offAllNamed(AppRoutes.adminCompaniesManagementScreen);
               }),
               _tab(Icons.logout,AppStrings.logout,(){
-               Get.offAndToNamed(AppRoutes.switchScreen);
+               Get.offAllNamed(AppRoutes.switchScreen);
               }),
             ]
         )
