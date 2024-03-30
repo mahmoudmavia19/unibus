@@ -25,7 +25,7 @@ class DriverLoginController extends GetxController {
           state.value = ErrorState(StateRendererType.popupErrorState,failure.message);
         },(l) {
           if(l){
-            Get.offAllNamed(AppRoutes.driverHomeScreen);
+            Get.offAllNamed(AppRoutes.driverTripsTableScreen);
           } else {
             state.value = ErrorState(StateRendererType.popupErrorState,AppStrings.noDriver);
           }

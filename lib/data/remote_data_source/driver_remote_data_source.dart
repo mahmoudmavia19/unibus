@@ -1,5 +1,6 @@
 import 'package:dartz/dartz.dart';
 import 'package:unibus/core/errors/failure.dart';
+import 'package:unibus/presentation/comapny/travels_management/model/trip.dart';
 
 import '../../core/errors/error_handler.dart';
 import '../../core/network/network_info.dart';
@@ -7,6 +8,8 @@ import '../apiClient/api_driver_client.dart';
 
 abstract class DriverRemoteDataSource {
   Future<Either<Failure,bool>> login(String email, String password);
+  Future<Either<Failure,List<Trip>>> getTrips();
+
 }
 class DriverRemoteDataSourceImpl implements DriverRemoteDataSource {
   ApiDriverClient apiClient;
@@ -27,5 +30,19 @@ class DriverRemoteDataSourceImpl implements DriverRemoteDataSource {
       return  Left(ErrorHandler.handle(DataSource.NO_INTERNET_CONNECTION).failure);
     }
 
+  }
+
+  @override
+  Future<Either<Failure, List<Trip>>> getTrips() async{
+    if(await networkInfo.isConnected()){
+      try{
+        var response = await apiClient.getTrips();
+        return Right(response);
+      } catch(e){
+        return Left(ErrorHandler.handle(e).failure);
+      }
+    } else {
+      return Left(ErrorHandler.handle(DataSource.NO_INTERNET_CONNECTION).failure);
+    }
   }
 }
