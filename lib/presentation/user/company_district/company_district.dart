@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:slide_countdown/slide_countdown.dart';
 import 'package:unibus/core/app_export.dart';
+import 'package:unibus/core/utils/state_renderer/state_renderer_impl.dart';
+import 'package:unibus/presentation/user/company_district/controller/company_district_controller.dart';
 
-class CompanyDistrictScreen extends StatelessWidget {
+class CompanyDistrictScreen extends GetWidget<CompanyDistrictController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -57,43 +59,40 @@ class CompanyDistrictScreen extends StatelessWidget {
             ),
           ),
           Expanded(
-            child: ListView.builder(
-              itemCount: 4,
-              itemBuilder: (context, index) {
-                return Card(
-                    child: ListTile(
-                        title: Text('District name',style:TextStyle(fontWeight: FontWeight.bold,color: theme.primaryColor),),
-                        subtitle: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              SizedBox(height: 10,),
-                              Row(
-                                children: [
-                                  Icon(Icons.mode_of_travel,color: theme.primaryColor,),
-                                  SizedBox(width: 10.0,),
-                                  Text('trips ${index+1}'),
-                                ],
-                              ),
-                              Row(
-                                children: [
-                                  Icon(Icons.price_change_outlined,color: theme.primaryColor,),
-                                  SizedBox(width: 10.0,),
-                                  Text('Price : \$${(index+1)*5}'),
-                                  Spacer(),
-                                  TextButton(onPressed: (){
-                                    Get.toNamed(AppRoutes.userCompanyTripsScreen);
-                                  }, child: Text('Show Trips',style: TextStyle(fontSize: 16.0),))
-                                ],
-                              ),
-                              SizedBox(height: 10.0,),
-                            ]
-                        )
-                    )
-                );
-              },),
+            child:Obx(()=>controller.state.value.getScreenWidget(_body(), (){
+              controller.getPrices();
+            })) ,
           )
         ],
       ),
     );
   }
+  _body()=>ListView.builder(
+    itemCount: controller.prices.length,
+    itemBuilder: (context, index) {
+      var price = controller.prices[index];
+      return Card(
+          child: ListTile(
+              title: Text(price.district??'',style:TextStyle(fontWeight: FontWeight.bold,color: theme.primaryColor),),
+              subtitle: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    SizedBox(height: 10,),
+                     Row(
+                      children: [
+                        Icon(Icons.price_change_outlined,color: theme.primaryColor,),
+                        SizedBox(width: 10.0,),
+                        Text('Price : \$${price.price}'),
+                        Spacer(),
+                        TextButton(onPressed: (){
+                          Get.toNamed(AppRoutes.userCompanyTripsScreen,arguments: [controller.company,price]);
+                        }, child: Text('Show Trips',style: TextStyle(fontSize: 16.0),))
+                      ],
+                    ),
+                    SizedBox(height: 10.0,),
+                  ]
+              )
+          )
+      );
+    },);
 }

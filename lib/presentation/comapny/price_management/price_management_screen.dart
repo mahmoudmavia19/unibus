@@ -29,7 +29,7 @@ class PriceManagementScreen extends StatelessWidget {
             SizedBox(height: 20.0),
             Expanded(child: Obx(() =>
             priceController.state.value.getScreenWidget( _buildPriceList(), (){
-
+              priceController.getPrices();
             })
             )),
           ],
@@ -79,9 +79,9 @@ class PriceManagementScreen extends StatelessWidget {
       ],
     );
   }
-  Widget _buildEditPriceField(index, district, price) {
-    districtController.text = district;
-    priceTextController.text = price.toString();
+  Widget _buildEditPriceField(index,Price price) {
+    districtController.text = price.district.toString();
+    priceTextController.text = price.price.toString();
     return AlertDialog(
       content: Padding(
         padding: const EdgeInsets.all(20.0),
@@ -91,12 +91,18 @@ class PriceManagementScreen extends StatelessWidget {
             TextFormField(
               controller: districtController,
               decoration: InputDecoration(labelText: 'District Name',),
+              onChanged: (value) {
+                price.district = value;
+              },
             ),
             SizedBox(height: 10.0),
             TextFormField(
               controller: priceTextController,
               decoration: InputDecoration(labelText: 'Monthly Price'),
               keyboardType: TextInputType.number,
+              onChanged: (value) {
+                price.price = double.parse(value);
+              }
             ),
 
           ],
@@ -105,7 +111,7 @@ class PriceManagementScreen extends StatelessWidget {
       actions: [
         TextButton(
           onPressed: (){
-            _editPrice(index, district, price);
+            _editPrice(index,price);
           },
           child: Text('Edit'),
         ),
@@ -119,38 +125,43 @@ class PriceManagementScreen extends StatelessWidget {
     );
   }
   Widget _buildPriceList() {
-    return ListView.builder(
-      itemCount: priceController.districtPrices.length,
-      itemBuilder: (context, index) {
-        var district = priceController.districtPrices[index].district;
-        var price = priceController.districtPrices[index].price;
-        return Column(
-          children: [
-            ListTile(
-              title: Text(district,style: TextStyle(color: theme.primaryColor),),
-              subtitle: Text('\$$price'),
-              trailing: Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  IconButton(
-                    icon: Icon(Icons.edit),
-                    onPressed: () {
-                      Get.dialog(
-                          _buildEditPriceField(index, district, price)
-                      );
-                    },
-                  ),
-                  IconButton(
-                    icon: Icon(Icons.delete),
-                    onPressed: () => _deletePrice(index),
-                  ),
-                ],
-              ),
-            ),
-            Divider()
-          ],
-        );
+    return RefreshIndicator(
+      onRefresh: () async {
+        priceController.getPrices();
       },
+      child: ListView.builder(
+        itemCount: priceController.districtPrices.length,
+        itemBuilder: (context, index) {
+          var district = priceController.districtPrices[index].district;
+          var price = priceController.districtPrices[index].price;
+          return Column(
+            children: [
+              ListTile(
+                title: Text(district??'',style: TextStyle(color: theme.primaryColor),),
+                subtitle: Text('\$$price'),
+                trailing: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    IconButton(
+                      icon: Icon(Icons.edit),
+                      onPressed: () {
+                        Get.dialog(
+                            _buildEditPriceField(index,priceController.districtPrices[index])
+                        );
+                      },
+                    ),
+                    IconButton(
+                      icon: Icon(Icons.delete),
+                      onPressed: () => _deletePrice(index),
+                    ),
+                  ],
+                ),
+              ),
+              Divider()
+            ],
+          );
+        },
+      ),
     );
   }
 
@@ -166,9 +177,9 @@ class PriceManagementScreen extends StatelessWidget {
     Get.back();
   }
 
-  void _editPrice(int index,String district, double price) {
-    if (district.isNotEmpty && price > 0) {
-      priceController.editPrice(index,Price(price, district));
+  void _editPrice(int index,Price price) {
+    if (price.district!.isNotEmpty && price.price! > 0) {
+      priceController.editPrice(price);
       districtController.clear();
       priceTextController.clear();
       Get.back();

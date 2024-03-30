@@ -1,8 +1,10 @@
 
+import 'package:day_picker/model/day_in_week.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:intl/intl.dart';
 import 'package:location/location.dart';
+import 'package:unibus/presentation/comapny/drivers_management/model/driver.dart';
 import 'package:unibus/presentation/comapny/travels_management/controller/travels_controller.dart';
 import 'package:unibus/presentation/comapny/travels_management/model/trip.dart';
 
@@ -21,17 +23,40 @@ class EditTripController extends GetxController {
  late final  tripContentController;
    final Rx<LocationData> currentLocation_ = Rx(LocationData.fromMap({}));
   late GoogleMapController mapController;
+  List<DayInWeek> days = [
+    DayInWeek(
+      "Sat",
+      dayKey: "Sat",
+    ),
+    DayInWeek(
+      "Sun",
+      dayKey: "Sun",
+
+    ),
+    DayInWeek(
+      "Mon",
+      dayKey: "Mon",
+    ),
+    DayInWeek(
+      "Tue",
+      dayKey: "Tue",
+    ),
+    DayInWeek(
+      "Wed",
+      dayKey: "Wed",
+    ),
+    DayInWeek(
+      "Thu",
+      dayKey: "Thu",
+    ),
+  ];
+
   final GlobalKey<FormState> flowKey = GlobalKey<FormState>();
   Rx<FlowState> state = Rx<FlowState>(ContentState());
   TripController tripController = Get.put(TripController());
+  Rx<Driver?> selectedDriver = Rx<Driver?>(null);
    FlowState get getState => state.value;
 
-
-   List<String> drivers = [
-     'Driver 1 ',
-     'Driver 2',
-     'Driver 3',
-   ];
   @override
   void onClose() {
     mapController.dispose();
@@ -39,10 +64,18 @@ class EditTripController extends GetxController {
   }
 
   @override
-  void onInit() {
+  void onInit() async{
     tripNumberController = TextEditingController(text: trip.number);
      tripExitGateController = TextEditingController(text: trip.exitGate);
     tripEnterGateController = TextEditingController(text: trip.enterGate);
+    for(var i=0 ; i<days.length;i++){
+       days[i].isSelected = trip.days?.contains(days[i].dayKey)??false;
+    }
+    selectedDriver.value = tripController.drivers.where((p0) => p0.uid == trip.driver).first;
+    if(tripController.drivers.isEmpty){
+      await tripController.getDrivers();
+      selectedDriver.value = tripController.drivers.where((p0) => p0.uid == trip.driver).first;
+    }
     _getCurrentLocation();
     super.onInit();
   }
@@ -86,7 +119,7 @@ class EditTripController extends GetxController {
     if (flowKey.currentState!.validate()) {
       trip.enterGate = tripEnterGateController.text;
       trip.exitGate = tripExitGateController.text;
-      trip.driver = tripNumberController.text;
+      trip.driver = selectedDriver.value?.uid??'';
       trip.number = tripNumberController.text;
       tripController.editTrip(index,trip);
       Get.back();

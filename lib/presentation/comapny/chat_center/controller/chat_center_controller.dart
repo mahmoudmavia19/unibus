@@ -1,28 +1,35 @@
 import 'package:get/get.dart';
+import 'package:unibus/data/remote_data_source/company_remote_data_source.dart';
+import 'package:unibus/presentation/admin/companies_management/model/company_model.dart';
+import 'package:unibus/presentation/admin/users_manage/model/user_model.dart';
 
 import '../model/chat_model.dart';
 
 class ChatCenterController extends GetxController {
-  // Define a list to store chat models
-  RxList<ChatModel> chats = <ChatModel>[].obs;
-
+   RxList<ChatModel> chats = <ChatModel>[].obs;
+   RxList<UserModel> users = <UserModel>[].obs;
+   CompanyRemoteDataSource remoteDataSource = Get.find<CompanyRemoteDataSourceImpl>();
   @override
-  void onInit() {
-    // Initialize the controller
-    fetchChats();
-    super.onInit();
+  void onInit() async{
+    await getUsers();
+    await getChats();
+      super.onInit();
+  }
+  Future<void> getUsers()async{
+    (await remoteDataSource.getUsers()).fold((l){
+
+    }, (r){
+      users.value = r;
+    });
+  }
+   Future<void> getChats()async{
+    (await remoteDataSource.getChats()).listen((event) {
+      chats.value = event.map((e){
+        e.title = users.firstWhere((element) => element.userId == e.id).name;
+        return e;
+      }).toList();
+    });
   }
 
-  // Fetch chats from your data source (e.g., API, database)
-  void fetchChats() {
-    // In a real application, you would fetch chats from an API or database
-    // For demonstration purposes, let's add some dummy data
-    chats.assignAll([
-      ChatModel(title: 'Test User 1 ', lastMessage: 'Hello!', lastMessageTime: DateTime.now()),
-      ChatModel(title: 'Test User  2', lastMessage: 'Hi there!' , lastMessageTime: DateTime.now()),
-      // Add more chat rooms if needed
-    ]);
-  }
 
-// Add more methods for managing chats, sending messages, etc.
 }

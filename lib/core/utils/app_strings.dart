@@ -83,6 +83,9 @@ class AppStrings {
   static const String noCompany = 'You are not a company';
   static const String passwordNotMatch = 'Password does not match';
   static const String invalidPhone = 'Invalid Phone';
+  static const String successEdited = 'Edited Successfully';
+  static const String pending = 'Pending';
+
 
 
 

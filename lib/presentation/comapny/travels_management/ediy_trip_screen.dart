@@ -2,10 +2,12 @@ import 'package:day_picker/day_picker.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:intl/intl.dart';
 import 'package:unibus/core/utils/app_strings.dart';
 import 'package:unibus/core/utils/state_renderer/state_renderer_impl.dart';
+import 'package:unibus/presentation/comapny/drivers_management/model/driver.dart';
 import 'package:unibus/presentation/comapny/travels_management/controller/edit_trip_controller.dart';
 
 import '../../../core/app_export.dart';
@@ -14,35 +16,6 @@ import 'controller/add_trip_controller.dart';
 
 class EditTripScreen extends GetWidget<EditTripController> {
 
-  List<DayInWeek> _days = [
-    DayInWeek(
-      "Sat",
-      dayKey: "Sat",
-    ),
-    DayInWeek(
-      "Sun",
-      dayKey: "Sun",
-
-    ),
-    DayInWeek(
-      "Mon",
-      dayKey: "Mon",
-    ),
-    DayInWeek(
-      "Tue",
-      isSelected: true,
-      dayKey: "Tue",
-    ),
-    DayInWeek(
-      "Wed",
-      dayKey: "Wed",
-    ),
-    DayInWeek(
-      "Thu",
-      dayKey: "Thu",
-    ),
-
-  ];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -81,7 +54,7 @@ class EditTripScreen extends GetWidget<EditTripController> {
           SelectWeekDays(
             fontSize: 14,
             fontWeight: FontWeight.w500,
-            days: _days,
+            days: controller.days,
             border: false,
             boxDecoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(5.0),
@@ -96,25 +69,27 @@ class EditTripScreen extends GetWidget<EditTripController> {
           Text(AppStrings.driver, style: Theme.of(context).textTheme.titleLarge),
           SizedBox(height: 16.0),
           SizedBox(height: 16.0),
-          DropdownButtonFormField<String?>(items: controller.drivers.map((e) => DropdownMenuItem(
-            value: e,
-            child: Text(e),
-          )) .toList(),
-              value: controller.trip.driver,
-              validator:(value) {
-                if(value == null){
-                  return 'Please select a driver';
-                }
-                return null;
-              },
-              style: TextStyle(color: Colors.black),
-              decoration: InputDecoration(
-                labelText: AppStrings.driver,
-                border: OutlineInputBorder(),
-              ),
-              onChanged:(value) {
-                controller.trip.driver = value;
-              }),
+          Obx(
+            ()=> DropdownButtonFormField<Driver?>(items: controller.tripController.drivers.map((e) => DropdownMenuItem(
+              value: e,
+              child: Text(e.name??''),
+            )) .toList(),
+                value: controller.selectedDriver.value,
+                validator:(value) {
+                  if(value == null){
+                    return 'Please select a driver';
+                  }
+                  return null;
+                },
+                style: TextStyle(color: Colors.black),
+                decoration: InputDecoration(
+                  labelText: AppStrings.driver,
+                  border: OutlineInputBorder(),
+                ),
+                onChanged:(value) {
+                  controller.selectedDriver.value = value;
+                }),
+          ),
           SizedBox(height: 16.0),
           Text(AppStrings.tripExitGate, style: Theme.of(context).textTheme.titleLarge),
           SizedBox(height: 16.0),

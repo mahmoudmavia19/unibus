@@ -30,44 +30,49 @@ class TripsManagementScreen extends StatelessWidget {
   }
 
   Widget _buildTripsList() {
-    return ListView.builder(
-      itemCount: tripController.trips.length,
-      itemBuilder: (context, index) {
-        Trip trip = tripController.trips[index];
-        return Column(
-          children: [
-            ListTile(
-              onTap: () => _showTrip(trip),
-              leading: Text(trip.number??"",style: TextStyle(color: theme.primaryColor,fontSize: 16.0),),
-//              title: Text(trip.enterGate??""),
-              subtitle:Column(
-                 children: [
-                    _buildText(AppStrings.driver, trip.driver??""),
-                   _buildText(AppStrings.day, trip.days.toString()),
-                 ],
-              ),
-              trailing: Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  IconButton(
-                    icon: Icon(Icons.edit),
-                    onPressed: () => _editTrip(context, index, trip),
-                  ),
-                  IconButton(
-                    icon: Icon(Icons.delete),
-                    onPressed: () => _deleteTrip(index),
-                  ),
-                ],
-              ),
-            ),
-            Divider(),
-          ],
-        );
+    return RefreshIndicator(
+      onRefresh: () async{
+        tripController.getTrips();
       },
+      child: ListView.builder(
+        itemCount: tripController.trips.length,
+        itemBuilder: (context, index) {
+          Trip trip = tripController.trips[index];
+          return Column(
+            children: [
+              ListTile(
+                onTap: () => _showTrip(trip,context),
+                leading: Text(trip.number??"",style: TextStyle(color: theme.primaryColor,fontSize: 16.0),),
+      //              title: Text(trip.enterGate??""),
+                subtitle:Column(
+                   children: [
+                      _buildText(AppStrings.driver, tripController.drivers.where((p0) => p0.uid==trip.driver).first.name??""),
+                     _buildText(AppStrings.day, trip.days.toString()),
+                   ],
+                ),
+                trailing: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    IconButton(
+                      icon: Icon(Icons.edit),
+                      onPressed: () => _editTrip(context, index, trip),
+                    ),
+                    IconButton(
+                      icon: Icon(Icons.delete),
+                      onPressed: () => _deleteTrip(trip),
+                    ),
+                  ],
+                ),
+              ),
+              Divider(),
+            ],
+          );
+        },
+      ),
     );
   }
 
-  void _showTrip(Trip trip) {
+  void _showTrip(Trip trip,context) {
     Get.defaultDialog(
       title: trip.number??"",
       content: SingleChildScrollView(
@@ -78,8 +83,9 @@ class TripsManagementScreen extends StatelessWidget {
             children: [
               _buildText(AppStrings.tripEntryGate, trip.enterGate??""),
               _buildText(AppStrings.tripExitGate, trip.exitGate??""),
-              _buildText(AppStrings.driver, trip.driver??""),
+              _buildText(AppStrings.driver, tripController.drivers.where((p0) => p0.uid==trip.driver).first.name??""),
               _buildText(AppStrings.day, trip.days.toString()),
+              _buildText(AppStrings.time, DateFormat.jm().format(trip.time!)),
              ],
           ),
         ),
@@ -110,7 +116,7 @@ class TripsManagementScreen extends StatelessWidget {
    Get.toNamed(AppRoutes.companyEditTripScreen,arguments:[index,trip]);
   }
 
-  void _deleteTrip(int index) {
-    tripController.deleteTrip(index);
+  void _deleteTrip(Trip trip) {
+    tripController.deleteTrip(trip);
    }
 }

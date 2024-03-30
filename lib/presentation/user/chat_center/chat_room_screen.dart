@@ -1,21 +1,21 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
+ import 'package:intl/intl.dart';
 import 'package:unibus/core/app_export.dart';
-import 'package:unibus/presentation/comapny/chat_center/controller/chat_room_controller.dart';
-import 'package:unibus/presentation/comapny/chat_center/model/chat_model.dart';
+import 'package:unibus/presentation/admin/companies_management/model/company_model.dart';
+ import 'package:unibus/presentation/user/chat_center/controller/chat_center_controller.dart';
 
 import '../../comapny/chat_center/model/message_model.dart';
 
-class ChatRoomScreen extends GetWidget<CompanyChatRoomController> {
-  ChatModel chat = Get.arguments;
+class ChatRoomScreen extends GetWidget<ChatRoomController> {
+  Company company = Get.arguments;
   final TextEditingController messageController = TextEditingController();
-  ChatRoomScreen({Key? key,}) : super(key: key);
+    ChatRoomScreen({Key? key,}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(controller.chat.title??''),
+        title: Text(controller.company.name??''),
         // Display the title of the chat room        centerTitle: true,
         leading: IconButton(onPressed: (){
           Get.back();
@@ -24,7 +24,7 @@ class ChatRoomScreen extends GetWidget<CompanyChatRoomController> {
       body: Column(
         children: [
           Obx(
-                ()=> Expanded(
+          ()=> Expanded(
               child: ListView.builder(
                 reverse: true,
                 itemCount: controller.messages.length, // Example message count
@@ -41,7 +41,7 @@ class ChatRoomScreen extends GetWidget<CompanyChatRoomController> {
   }
 
   Widget _buildMessage(int index) {
-    final bool isSentMessage = chat.id != controller.messages[index].senderId;
+    final bool isSentMessage = company.companyId != controller.messages[index].senderId;
     var message = controller.messages[index];
 
     return Padding(

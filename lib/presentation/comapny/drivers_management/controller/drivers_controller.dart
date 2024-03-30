@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:unibus/core/utils/app_strings.dart';
 import 'package:unibus/core/utils/state_renderer/state_renderer.dart';
 import 'package:unibus/core/utils/state_renderer/state_renderer_impl.dart';
+import 'package:unibus/data/remote_data_source/company_remote_data_source.dart';
 
 import '../../../../core/app_export.dart';
  import '../model/driver.dart';
@@ -10,29 +11,58 @@ class DriverController extends GetxController {
    Rx<FlowState> state = Rx<FlowState>(ContentState());
    final GlobalKey<FormState> addFormKey = GlobalKey<FormState>();
    final GlobalKey<FormState> editFormKey = GlobalKey<FormState>();
-  var drivers = <Driver>[
-    Driver(name: 'Driver1', address: 'Address 1', phone: '0534567890', email: 'driver1@example.com', password: 'password1'),
-    Driver(name: 'Driver2', address: 'Address 2', phone: '0576543210', email: 'driver2@example.com', password: 'password2'),
-  ].obs  ;
-
-  void addDriver(Driver driver) {
+  var drivers = <Driver>[].obs  ;
+  CompanyRemoteDataSource remoteDataSource = Get.find<CompanyRemoteDataSourceImpl>();
+  void addDriver(Driver driver,String password) async{
     state.value = LoadingState(stateRendererType: StateRendererType.fullScreenLoadingState);
-    drivers.add(driver);
-    state.value = SuccessState(StateRendererType.popupSuccessState, AppStrings.successAdded);
+    (await remoteDataSource.addDriver(driver, password)).fold(
+      (failure) {
+        state.value = ErrorState(StateRendererType.popupErrorState, failure.message);
+      } , (r)async{
+        await getDrivers() ;
+        state.value = SuccessState(StateRendererType.popupSuccessState, AppStrings.successAdded);
+      }
+    );
+  }
+  onInit() {
+    getDrivers();
+    super.onInit();
+  }
+  Future<void> getDrivers() async{
+    state.value = LoadingState(stateRendererType: StateRendererType.fullScreenLoadingState);
+    (await remoteDataSource.getDrivers()).fold(
+      (failure) {
+        state.value = ErrorState(StateRendererType.popupErrorState, failure.message);
+      } , (r){
+        print(r.length);
+        drivers.value = r;
+        state.value = ContentState();
+      }
+    );
   }
 
-  void editDriver(int index, Driver driver) {
+  void editDriver(Driver driver) async{
     state.value = LoadingState(stateRendererType: StateRendererType.fullScreenLoadingState);
-    drivers[index] = driver;
-    state.value = SuccessState(StateRendererType.popupSuccessState, AppStrings.successUpdated);
-
+    (await remoteDataSource.editDriver(driver)).fold(
+      (failure) {
+        state.value = ErrorState(StateRendererType.popupErrorState, failure.message);
+      } , (r)async{
+        await getDrivers() ;
+        state.value = SuccessState(StateRendererType.popupSuccessState, AppStrings.successUpdated);
+      }
+    );
   }
 
-  void deleteDriver(int index) {
+  void deleteDriver(Driver driver) async{
     state.value = LoadingState(stateRendererType: StateRendererType.fullScreenLoadingState);
-
-    drivers.removeAt(index);
-    state.value = SuccessState(StateRendererType.popupSuccessState, AppStrings.successDeleted);
+    (await remoteDataSource.deleteDriver(driver)).fold(
+      (failure) {
+        state.value = ErrorState(StateRendererType.popupErrorState, failure.message);
+      } , (r)async{
+        await getDrivers() ;
+        state.value = SuccessState(StateRendererType.popupSuccessState, AppStrings.successDeleted);
+      }
+    );
 
   }
 }

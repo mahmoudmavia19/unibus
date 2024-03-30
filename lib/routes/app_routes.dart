@@ -24,12 +24,15 @@ import 'package:unibus/presentation/user/auth/forget_password/binding/forget_pas
 import 'package:unibus/presentation/user/auth/forget_password/forget_password_screen.dart';
 import 'package:unibus/presentation/user/auth/login/user_login_screen.dart';
 import 'package:unibus/presentation/user/auth/register/binding/user_register_binding.dart';
+import 'package:unibus/presentation/user/chat_center/binding/chat_center_binding.dart';
 import 'package:unibus/presentation/user/company_district/binding/company_district_binding.dart';
 import 'package:unibus/presentation/user/company_district/company_district.dart';
 import 'package:unibus/presentation/user/company_trips/binding/company_trip_binding.dart';
 import 'package:unibus/presentation/user/company_trips/company_trips_screen.dart';
+import 'package:unibus/presentation/user/home/binding/home_binding.dart';
 import 'package:unibus/presentation/user/main/binding/user_main_binding.dart';
 import 'package:unibus/presentation/user/main/main_screen.dart';
+import 'package:unibus/presentation/user/payment_screen/binding/payment_binding.dart';
 import 'package:unibus/presentation/user/user_profile/binding/user_profile_binding.dart';
 import 'package:unibus/presentation/user/user_profile/user_profile.dart';
 import '../presentation/admin/auth/login/binding/admin_login_binding.dart';
@@ -55,6 +58,7 @@ import '../presentation/driver/auth/login/driver_login_screen.dart';
 import '../presentation/user/auth/login/binding/user_login_binding.dart';
 import '../presentation/user/auth/register/user_register_screen.dart';
 import '../presentation/user/payment_screen/payment_screen.dart';
+import '../presentation/user/chat_center/chat_room_screen.dart' as user_chat_room;
 
 class AppRoutes {
   static const String splashScreen = '/splash_screen';
@@ -91,6 +95,7 @@ class AppRoutes {
   static const String userLoginScreen = '/user/userLoginScreen';
   static const String userRegisterScreen = '/user/userRegisterScreen';
   static const String forgetPasswordScreen = '/user/forgetPasswordScreen';
+  static const String chatRoomScreen = '/user/chatRoomScreen';
   // driver routes
   static const String driverLoginScreen = '/driver/driverLoginScreen';
   static const String driverRegisterScreen = '/driver/driverRegisterScreen';
@@ -192,7 +197,8 @@ class AppRoutes {
     ),
     GetPage (
       name: companyChatRoom,
-      page: () => ChatRoomScreen(chat: Get.arguments)
+      page: () => ChatRoomScreen(),
+      binding: ChatCenterBinding(),
     ),
     GetPage (
       name: companyLiveTrip,
@@ -222,7 +228,9 @@ class AppRoutes {
     GetPage(
       name: userMain,
       page: () => MainScreen(),
-      binding: UserMainBinding(),
+      bindings:[
+        HomeBinding(),
+        UserMainBinding()],
     ),
     GetPage (
       name: userCompanyTripsScreen,
@@ -237,6 +245,7 @@ class AppRoutes {
     GetPage(
       name: userPaymentScreen,
       page: () => PaymentScreen(),
+      binding: PaymentBinding(),
 
     ),
      GetPage(
@@ -269,6 +278,10 @@ class AppRoutes {
       name: driverTripsTableScreen,
       page: () => TripsTableScreen(),
       binding: TripsTableBinding(),
+    ),
+    GetPage(name:chatRoomScreen ,
+        page: () => user_chat_room.ChatRoomScreen(),
+      binding: ChatRoomBinding(),
     )
    ];
 }

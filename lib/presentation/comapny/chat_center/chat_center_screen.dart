@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:unibus/core/app_export.dart';
 import 'package:unibus/core/utils/app_strings.dart';
@@ -24,11 +25,13 @@ class ChatCenterScreen extends GetWidget<ChatCenterController> {
                 Tab(text: AppStrings.student,),
                 Tab(text: AppStrings.employee,),
               ]),
-              Expanded(
-                child: TabBarView(children:[
-                  _tab1(),
-                  _tab2(),
-                ]),
+              Obx(
+                  ()=> Expanded(
+                  child: TabBarView(children:[
+                    _tab1(),
+                    _tab2(),
+                  ]),
+                ),
               ),
             ],
           ))
@@ -44,13 +47,13 @@ class ChatCenterScreen extends GetWidget<ChatCenterController> {
             return Column(
               children: [
                 ListTile(
-                  title: Text(controller.chats[index].title,style: TextStyle(fontWeight: FontWeight.bold,color: theme.primaryColor),),
+                  title: Text(controller.chats[index].title??'',style: TextStyle(fontWeight: FontWeight.bold,color: theme.primaryColor),),
                   subtitle: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      Text(controller.chats[index].lastMessage),
-                      Text(DateFormat.yMMMd().format(controller.chats[index].lastMessageTime), style: TextStyle(fontSize: 12,color: Colors.grey),),
+                      Text(controller.chats[index].lastMessage??''),
+                      Text(DateFormat.yMMMd().format(controller.chats[index].lastMessageTime!), style: TextStyle(fontSize: 12,color: Colors.grey),),
                     ],
                   ),
                   trailing: Icon(Icons.arrow_forward_ios),
@@ -76,13 +79,13 @@ class ChatCenterScreen extends GetWidget<ChatCenterController> {
             return Column(
               children: [
                 ListTile(
-                  title: Text(controller.chats[index].title,style: TextStyle(fontWeight: FontWeight.bold,color: theme.primaryColor),),
+                  title: Text(controller.chats[index].title??'',style: TextStyle(fontWeight: FontWeight.bold,color: theme.primaryColor),),
                   subtitle: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      Text(controller.chats[index].lastMessage),
-                      Text(DateFormat.yMMMd().format(controller.chats[index].lastMessageTime), style: TextStyle(fontSize: 12,color: Colors.grey),),
+                      Text(controller.chats[index].lastMessage??''),
+                      Text(DateFormat.yMMMd().format(controller.chats[index].lastMessageTime!), style: TextStyle(fontSize: 12,color: Colors.grey),),
                     ],
                   ),
                   trailing: Icon(Icons.arrow_forward_ios),

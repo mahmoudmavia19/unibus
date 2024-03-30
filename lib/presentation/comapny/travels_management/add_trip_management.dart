@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:unibus/core/utils/app_strings.dart';
 import 'package:unibus/core/utils/state_renderer/state_renderer_impl.dart';
+import 'package:unibus/presentation/comapny/drivers_management/model/driver.dart';
 
 import '../../../core/app_export.dart';
 import '../../../core/constants/constant.dart';
@@ -99,6 +100,7 @@ class AddTripScreen extends GetWidget<AddTripController> {
               onTap: () {
                 showTimePicker(context: context, initialTime: TimeOfDay.now()).then((value) {
                   controller.tripDateTimeController.text = value!.format(context);
+                  controller.trip.time = DateTime.tryParse(value.format(context));
                 });
               },
               controller: controller.tripDateTimeController),
@@ -106,11 +108,11 @@ class AddTripScreen extends GetWidget<AddTripController> {
           Text(AppStrings.driver, style: Theme.of(context).textTheme.titleLarge),
           SizedBox(height: 16.0),
           SizedBox(height: 16.0),
-          DropdownButtonFormField<String?>(items: controller.drivers.map((e) => DropdownMenuItem(
+          DropdownButtonFormField<Driver?>(items: controller.tripController.drivers.map((e) => DropdownMenuItem(
             value: e,
-            child: Text(e),
+            child: Text(e.name??''),
           )) .toList(),
-              value: controller.trip.driver,
+              value: controller.selectedDriver,
               validator:(value) {
                 if(value == null){
                   return 'Please select a driver';
@@ -123,7 +125,7 @@ class AddTripScreen extends GetWidget<AddTripController> {
                 border: OutlineInputBorder(),
               ),
               onChanged:(value) {
-                controller.trip.driver = value;
+                controller.selectedDriver = value;
               }),
           SizedBox(height: 16.0),
           Text(AppStrings.tripEntryGate, style: Theme.of(context).textTheme.titleLarge),

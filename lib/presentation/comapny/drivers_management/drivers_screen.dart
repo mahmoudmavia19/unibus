@@ -33,37 +33,42 @@ class DriverManagementScreen extends StatelessWidget {
   }
 
   Widget _buildDriversList() {
-    return ListView.builder(
-      itemCount: driverController.drivers.length,
-      itemBuilder: (context, index) {
-        Driver driver = driverController.drivers[index];
-        return Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            ListTile(
-              onTap:(){
-                _showDriver(driver);
-              },
-              title: Text(driver.name,style: TextStyle(color: theme.primaryColor),),
-              subtitle: Text(driver.email),
-              trailing: Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  IconButton(
-                    icon: Icon(Icons.edit),
-                    onPressed: () => _editDriver(context, index, driver),
-                  ),
-                  IconButton(
-                    icon: Icon(Icons.delete),
-                    onPressed: () => _deleteDriver(index),
-                  ),
-                ],
-              ),
-            ),
-            Divider()
-          ],
-        );
+    return RefreshIndicator(
+      onRefresh: () async{
+        driverController.getDrivers();
       },
+      child: ListView.builder(
+        itemCount: driverController.drivers.length,
+        itemBuilder: (context, index) {
+          Driver driver = driverController.drivers[index];
+          return Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              ListTile(
+                onTap:(){
+                  _showDriver(driver);
+                },
+                title: Text(driver.name??'',style: TextStyle(color: theme.primaryColor),),
+                subtitle: Text(driver.email??''),
+                trailing: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    IconButton(
+                      icon: Icon(Icons.edit),
+                      onPressed: () => _editDriver(context, index, driver),
+                    ),
+                    IconButton(
+                      icon: Icon(Icons.delete),
+                      onPressed: () => _deleteDriver(driver),
+                    ),
+                  ],
+                ),
+              ),
+              Divider()
+            ],
+          );
+        },
+      ),
     );
   }
 
@@ -78,7 +83,7 @@ class DriverManagementScreen extends StatelessWidget {
   }
   void _showDriver(Driver driver) {
     Get.defaultDialog(
-      title: driver.name,
+      title: driver.name!,
       content: SingleChildScrollView(
         child: Form(
           key: driverController.addFormKey,
@@ -161,9 +166,8 @@ class DriverManagementScreen extends StatelessWidget {
         address: address,
         phone:phone,
         email: email,
-        password: password,
       );
-      driverController.addDriver(newDriver);
+      driverController.addDriver(newDriver, password);
       Get.back();
     }
   }
@@ -171,7 +175,7 @@ class DriverManagementScreen extends StatelessWidget {
     return Get.defaultDialog(
       titlePadding: EdgeInsets.all(10),
       contentPadding:EdgeInsets.all(20),
-      title: driver.name + ' ' + AppStrings.rateDriverTitle,
+      title: driver.name! + ' ' + AppStrings.rateDriverTitle,
       content: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
@@ -196,7 +200,7 @@ class DriverManagementScreen extends StatelessWidget {
     TextEditingController addressController = TextEditingController(text: driver.address);
     TextEditingController phoneController = TextEditingController(text: driver.phone.toString());
     TextEditingController emailController = TextEditingController(text: driver.email);
-    TextEditingController passwordController = TextEditingController(text: driver.password);
+   // TextEditingController passwordController = TextEditingController();
 
     Get.defaultDialog(
       title: AppStrings.editUserDialogTitle,
@@ -209,7 +213,7 @@ class DriverManagementScreen extends StatelessWidget {
               _buildTextField(addressController, AppStrings.addressLabel),
               _buildTextField(phoneController, AppStrings.phoneLabel),
               _buildTextField(emailController, AppStrings.emailLabel),
-              _buildTextField(passwordController, AppStrings.passwordLabel),
+           //   _buildTextField(passwordController, AppStrings.passwordLabel),
             ],
           ),
         ),
@@ -220,8 +224,8 @@ class DriverManagementScreen extends StatelessWidget {
           userIdController.text,
           addressController.text,
           phoneController.text,
-          emailController.text,
-          passwordController.text,
+          emailController.text
+        //  passwordController.text,
         ),
         child: Text(AppStrings.saveButtonText),
       ),
@@ -232,27 +236,28 @@ class DriverManagementScreen extends StatelessWidget {
     );
   }
 
-  void _confirmEditDriver(int index, String userId, String address, String phone, String email, String password) {
+  void _confirmEditDriver(int index, String userId, String address, String phone, String email) {
     if(driverController.editFormKey.currentState!.validate()) {
       Driver editedDriver = Driver(
         name: userId,
         address: address,
         phone:phone,
         email: email,
-        password: password,
+        companyId: driverController.drivers[index].companyId,
+        uid: driverController.drivers[index].uid
       );
-      driverController.editDriver(index, editedDriver);
+      driverController.editDriver(editedDriver);
       Get.back();
     }
   }
 
-  void _deleteDriver(int index) {
+  void _deleteDriver(Driver driver) {
     Get.defaultDialog(
       title: AppStrings.confirmDeletionTitle,
       content: Text(AppStrings.confirmDeletionContent),
       confirm: TextButton(
         onPressed: () {
-          driverController.deleteDriver(index);
+          driverController.deleteDriver(driver);
           Get.back();
         },
         child: Text(AppStrings.deleteButtonText),

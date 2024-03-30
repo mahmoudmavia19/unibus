@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:unibus/core/app_export.dart';
 import 'package:unibus/core/utils/app_strings.dart';
+import 'package:unibus/core/utils/state_renderer/state_renderer_impl.dart';
 import 'controller/user_profile_controller.dart';
 
 class UserProfileScreen  extends StatelessWidget {
@@ -11,44 +12,9 @@ class UserProfileScreen  extends StatelessWidget {
          body: Center(
           child: SingleChildScrollView(
             padding: EdgeInsets.all(20.0),
-            child: Column(
-              children: [
-                Image.asset(ImageConstant.imgLogo, width: 150,),
-                SizedBox(height: 30.0,),
-                _buildTextFormField(AppStrings.name, Icons.person,readOnly: !controller.isEditMode.value),
-                _buildTextFormField(AppStrings.email, Icons.email),
-                _buildTextFormField(AppStrings.phone, Icons.phone,readOnly: !controller.isEditMode.value),
-                _buildTextFormFieldPassword(AppStrings.password, Icons.lock,readOnly:!controller.isEditMode.value),
-                SizedBox(height: 30.0,),
-                Visibility(
-                  visible: controller.isEditMode.value,
-                  child: SizedBox(
-                      width: double.infinity,
-                      height: 50.0,
-                      child: ElevatedButton(onPressed: () {
-                        // Save company profile logic
-                      }, child: Text(AppStrings.save))),
-                ) ,
-                SizedBox(
-                  width: 150.0,
-                  child: TextButton(onPressed: (){
-                    Get.offAndToNamed(AppRoutes.switchScreen);
-                  },
-                      style: TextButton.styleFrom(
-                        backgroundColor: Colors.red,
-                         foregroundColor: Colors.white
-                      ),
-                      child: Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Icon(Icons.logout),
-                          Text('Logout',style: TextStyle(fontSize: 16.0,fontWeight: FontWeight.bold),),
-                        ],
-                      )),
-                ),
-
-              ],
-            ),
+            child: controller.flowState.value.getScreenWidget(_body(), (){
+              controller.getProfile() ;
+            }),
           ),
         ),
         floatingActionButton:
@@ -59,6 +25,44 @@ class UserProfileScreen  extends StatelessWidget {
     );
   }
 
+  _body()=>Column(
+    children: [
+      Image.asset(ImageConstant.imgLogo, width: 150,),
+      SizedBox(height: 30.0,),
+      _buildTextFormField(AppStrings.name, Icons.person,readOnly: !controller.isEditMode.value,controller: controller.nameController),
+      _buildTextFormField(AppStrings.email, Icons.email,controller: controller.emailController,readOnly: true),
+      _buildTextFormField(AppStrings.phone, Icons.phone,readOnly: !controller.isEditMode.value,controller: controller.phoneController),
+      _buildTextFormFieldPassword(AppStrings.password, Icons.lock,readOnly:!controller.isEditMode.value,controller: controller.passwordController),
+      SizedBox(height: 30.0,),
+      Visibility(
+        visible: controller.isEditMode.value,
+        child: SizedBox(
+            width: double.infinity,
+            height: 50.0,
+            child: ElevatedButton(onPressed: () {
+              controller.updateProfile();
+            }, child: Text(AppStrings.save))),
+      ) ,
+      SizedBox(
+        width: 150.0,
+        child: TextButton(onPressed: (){
+          Get.offAndToNamed(AppRoutes.switchScreen);
+        },
+            style: TextButton.styleFrom(
+                backgroundColor: Colors.red,
+                foregroundColor: Colors.white
+            ),
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Icon(Icons.logout),
+                Text('Logout',style: TextStyle(fontSize: 16.0,fontWeight: FontWeight.bold),),
+              ],
+            )),
+      ),
+
+    ],
+  );
   _buildTextFormField(String title, IconData iconData, {TextEditingController? controller , bool readOnly = true}) {
     return Padding(
       padding: const EdgeInsets.only(top: 20.0),

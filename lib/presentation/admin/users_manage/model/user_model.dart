@@ -4,12 +4,15 @@ class UserModel {
    String? address;
    String? phone;
    String? email;
+   int? userType ;
    bool blocked = false;
+   bool accepted = false;
 
   UserModel({
     required this.name,
       this.userId,
       this.address,
+      this.userType,
     required this.phone,
     required this.email,
    });
@@ -21,6 +24,8 @@ class UserModel {
     phone = json['phone'];
     email = json['email'];
     blocked = json['blocked']??false;
+    accepted = json['accepted']??false;
+    userType = json['userType'];
    }
 
   Map<String, dynamic> toJson() {
@@ -31,6 +36,8 @@ class UserModel {
     data['phone'] = this.phone;
     data['email'] = this.email;
     data['blocked'] = this.blocked;
+    data['accepted'] = this.accepted;
+    data['userType'] = this.userType;
      return data;
   }
 

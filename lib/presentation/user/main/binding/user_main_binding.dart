@@ -9,7 +9,6 @@ class UserMainBinding extends Bindings {
   void dependencies() {
     Get.lazyPut(() => UserMainController());
     Get.lazyPut(() => MapTripController());
-    Get.lazyPut(() => HomeBinding());
 
   }
 }
