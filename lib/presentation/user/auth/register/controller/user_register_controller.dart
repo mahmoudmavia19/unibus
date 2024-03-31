@@ -14,7 +14,7 @@ class UseRegisterController extends GetxController {
   final TextEditingController cPasswordController = TextEditingController();
   Rx<FlowState> state = Rx<FlowState>(ContentState());
    FlowState get getState => state.value;
-   RemoteDataSource remoteDataSource = Get.find<RemoteDateSourceImpl>() ;
+   RemoteDataSource remoteDataSource = Get.find<RemoteDataSourceImpl>() ;
    var formKey = GlobalKey<FormState>();
   RxBool obscurePassword = true.obs;
 

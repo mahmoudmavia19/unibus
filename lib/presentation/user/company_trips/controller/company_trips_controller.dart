@@ -9,7 +9,7 @@ import '../../../../core/app_export.dart';
 
 class CompanyTripsController extends GetxController {
   Rx<FlowState> state = Rx<FlowState>(LoadingState(stateRendererType: StateRendererType.fullScreenLoadingState));
-  RemoteDataSource remoteDataSource = Get.find<RemoteDateSourceImpl>();
+  RemoteDataSource remoteDataSource = Get.find<RemoteDataSourceImpl>();
   RxList<Trip> trips = RxList<Trip>([]);
   Company company = Get.arguments[0];
   Price price = Get.arguments[1];

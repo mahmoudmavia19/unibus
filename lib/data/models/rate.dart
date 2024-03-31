@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:unibus/presentation/comapny/drivers_management/model/driver.dart';
 
 class DriverRate {
@@ -7,11 +8,20 @@ class DriverRate {
   String? comment ;
   DateTime? date ;
   Driver? driver ;
+   DriverRate({
+     this.driverId,
+     this.rate,
+     this.comment,
+     this.date,
+     this.driver,
+     this.companyId,
+    });
+
   DriverRate.fromJson(Map<String, dynamic> json) {
      driverId = json['driverId'];
     rate = json['rate'];
     comment = json['comment'];
-    date = json['date'];
+    date = (json['date'] as Timestamp).toDate();
      companyId = json['companyId'];
   }
 

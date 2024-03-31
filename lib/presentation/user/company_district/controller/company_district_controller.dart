@@ -10,7 +10,7 @@ import '../../../../core/app_export.dart';
 class CompanyDistrictController extends GetxController {
 
   Rx<FlowState> state = Rx<FlowState>(LoadingState(stateRendererType: StateRendererType.fullScreenLoadingState));
-  RemoteDataSource remoteDataSource = Get.find<RemoteDateSourceImpl>() ;
+  RemoteDataSource remoteDataSource = Get.find<RemoteDataSourceImpl>() ;
   var formKey = GlobalKey<FormState>();
   RxList<Price> prices = RxList<Price>([]);
   Company company = Get.arguments;

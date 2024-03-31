@@ -16,9 +16,6 @@ class LiveTripScreen extends GetWidget<LiveTripController> {
         title: Text(AppStrings.liveTrip),
         centerTitle: true,
         actions: [
-          IconButton(onPressed: (){
-            controller.startUpdatingLocations();
-          }, icon: Icon(Icons.start)),
           Image.asset(ImageConstant.imgLogo),
         ],
       ),

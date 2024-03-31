@@ -7,12 +7,12 @@ import 'dart:math';
 
 class LiveTripController extends GetxController {
   final Rx<LocationData> startLocation = Rx(LocationData.fromMap({
-    'latitude': startMapLocation.latitude,
-    'longitude': startMapLocation.longitude,
+    'latitude': testPath.first.latitude,
+    'longitude': testPath.first.longitude,
   }));
   final Rx<LocationData> endLocation = Rx(LocationData.fromMap({
-    'latitude': startMapLocation.latitude + 0.005,
-    'longitude': startMapLocation.longitude + 0.005,
+    'latitude': testPath.last.latitude,
+    'longitude': testPath.last.longitude,
   }));
   late GoogleMapController mapController;
 
@@ -28,19 +28,7 @@ class LiveTripController extends GetxController {
   void onReady() {
     super.onReady();
   }
-
   void startUpdatingLocations() {
-    startLocation.value = LocationData.fromMap({
-      'latitude': startMapLocation.latitude,
-      'longitude': startMapLocation.longitude,
-    });
-    Get.snackbar('Trip Alert', 'Trip started');
-    Timer.periodic(Duration(milliseconds: 500), (Timer timer) {
-      updateLocations(timer);
-      print(startLocation.value);
-      print('start');
-
-    });
   }
 
   double calculateDistance(LatLng point1, LatLng point2) {
@@ -97,7 +85,6 @@ class LiveTripController extends GetxController {
   }
 
   void getPolyPoints() {
-    polylineCoordinates.add(LatLng(startLocation.value.latitude!, startLocation.value.longitude!));
-     polylineCoordinates.add(LatLng(endLocation.value.latitude!, endLocation.value.longitude!));
+    polylineCoordinates= testPath;
   }
 }

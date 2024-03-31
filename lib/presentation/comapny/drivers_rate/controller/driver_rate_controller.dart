@@ -8,6 +8,7 @@ class DriverRateController extends GetxController {
   Rx<FlowState> state = Rx<FlowState>(ContentState());
   CompanyRemoteDataSource remoteDataSource = Get.find<CompanyRemoteDataSourceImpl>();
  DriverController driverController = Get.find();
+
   @override
   void onInit() {
     super.onInit();

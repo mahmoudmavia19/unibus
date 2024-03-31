@@ -20,7 +20,7 @@ class InitialBindings extends Bindings {
     Get.put(ApiClient(firebaseAuth, firebaseFirestore));
     Connectivity connectivity = Connectivity();
     Get.put(NetworkInfo(connectivity));
-    Get.put(RemoteDateSourceImpl(Get.find(), Get.find()));
+    Get.put(RemoteDataSourceImpl(Get.find(), Get.find()));
     Get.put(ApiAdminClient(firebaseAuth, firebaseFirestore));
     Get.put(AdminRemoteDataSourceImpl(Get.find(), Get.find()));
     Get.put(ApiCompanyClient(firebaseAuth, firebaseFirestore));

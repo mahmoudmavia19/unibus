@@ -17,27 +17,21 @@ class DriverHomeScreen extends GetWidget<DriverHomeController> {
           Image.asset(ImageConstant.imgLogo)
         ],
       ),
-      body: Obx(
-            () => GoogleMap(
-          gestureRecognizers: {
-            Factory<OneSequenceGestureRecognizer>(
-                  () => EagerGestureRecognizer(),
-            )
-          } ,
+      body:GoogleMap(
           mapType: MapType.terrain,
           myLocationEnabled: true,
           circles: {
             Circle(
               circleId: const CircleId("start"),
               center: LatLng(
-                startMapLocation.latitude,
-                startMapLocation.longitude,
+                testPath.first.latitude,
+                testPath.first.longitude,
               ),
               radius: 2,
             )
           },
           initialCameraPosition: CameraPosition(
-            target: LatLng(startMapLocation.latitude, startMapLocation.longitude),
+            target: LatLng(testPath.first.latitude, testPath.first.longitude),
             zoom: 19,
           ),
           onMapCreated: (_controller) {
@@ -55,22 +49,19 @@ class DriverHomeScreen extends GetWidget<DriverHomeController> {
             print(argument);
           },
           markers: {
+                Marker(
+                  markerId: MarkerId('2'),
+                  position: LatLng(testPath.first.latitude,testPath.first.longitude),
+                  infoWindow: InfoWindow(title:'2'),
+                ),
             Marker(
-              markerId: MarkerId('Start Location'),
-              position: LatLng(controller.startLocation.value.latitude ?? startMapLocation.latitude,
-                  controller.startLocation.value.longitude ?? startMapLocation.longitude),
-              infoWindow: InfoWindow(title: 'Start Location'),
-            ),
-            Marker(
-              markerId: MarkerId('End Location'),
-              icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueAzure),
-              position: LatLng(controller.endLocation.value.latitude ?? startMapLocation.latitude,
-                  controller.endLocation.value.longitude ?? startMapLocation.longitude),
-              infoWindow: InfoWindow(title: 'End Location'),
+              markerId: MarkerId('1'),
+              icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueRose),
+              position: LatLng(testPath.last.latitude,testPath.last.longitude),
+              infoWindow: InfoWindow(title:'1'),
             ),
           },
         ),
-      ),
       bottomSheet: Container(
         height: 50,
         child: Row(
@@ -89,7 +80,7 @@ class DriverHomeScreen extends GetWidget<DriverHomeController> {
                 child: Container(
                   child: TextButton(
                     onPressed: () {
-
+                      controller.stopUpdatingLocations();
                     },
                     child: Text('End Trip',style: TextStyle(fontSize: 16.0),),
                   ),

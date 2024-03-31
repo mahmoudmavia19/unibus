@@ -29,9 +29,11 @@ import 'package:unibus/presentation/user/company_district/binding/company_distri
 import 'package:unibus/presentation/user/company_district/company_district.dart';
 import 'package:unibus/presentation/user/company_trips/binding/company_trip_binding.dart';
 import 'package:unibus/presentation/user/company_trips/company_trips_screen.dart';
+import 'package:unibus/presentation/user/history/binding/history_binding.dart';
 import 'package:unibus/presentation/user/home/binding/home_binding.dart';
 import 'package:unibus/presentation/user/main/binding/user_main_binding.dart';
 import 'package:unibus/presentation/user/main/main_screen.dart';
+import 'package:unibus/presentation/user/notification/binding/notification_binding.dart';
 import 'package:unibus/presentation/user/payment_screen/binding/payment_binding.dart';
 import 'package:unibus/presentation/user/user_profile/binding/user_profile_binding.dart';
 import 'package:unibus/presentation/user/user_profile/user_profile.dart';
@@ -230,7 +232,10 @@ class AppRoutes {
       page: () => MainScreen(),
       bindings:[
         HomeBinding(),
-        UserMainBinding()],
+        UserMainBinding(),
+        HistoryBinding(),
+        NotificationBinding()
+      ],
     ),
     GetPage (
       name: userCompanyTripsScreen,

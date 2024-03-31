@@ -41,7 +41,29 @@ class TripsTableScreen extends GetWidget<TripsTableController> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        leading: Container(),
+        leading: IconButton(
+          onPressed: () {
+            Get.defaultDialog(
+              title: 'Logout',
+              middleText: 'Are you sure you want to logout?',
+              actions: [
+                TextButton(
+                  onPressed: () {
+                    Get.back();
+                  },
+                  child: Text('Cancel'),
+                ),
+                TextButton(
+                  onPressed: () {
+                    Get.offAndToNamed(AppRoutes.switchScreen);
+                  },
+                  child: Text('Logout'),
+                )
+              ]
+            );
+          },
+          icon: Icon(Icons.logout,color: Colors.red,),
+        ),
         title: Text('Trips Schedule Screen'),
         actions: [
           Image.asset(ImageConstant.imgLogo)
@@ -85,10 +107,10 @@ class TripsTableScreen extends GetWidget<TripsTableController> {
 
   _itemBuilder(context, Trip trip) {
     {
-      bool isStarted = DateFormat.jm().format(
+      bool isStarted =true;/* DateFormat.jm().format(
           trip.time ?? DateTime.now()) == DateFormat.jm().format(
           DateTime.now()
-          );
+          );*/
       return Column(
         children: [
           ListTile(
@@ -106,7 +128,7 @@ class TripsTableScreen extends GetWidget<TripsTableController> {
             ),
             trailing: ElevatedButton(onPressed: () {
               if(isStarted) {
-                Get.toNamed(AppRoutes.driverHomeScreen);
+                Get.toNamed(AppRoutes.driverHomeScreen,arguments: trip);
               } else {
                 Get.defaultDialog(
                   title: 'Alert',

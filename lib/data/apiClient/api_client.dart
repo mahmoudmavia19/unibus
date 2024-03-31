@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:unibus/core/app_export.dart';
+import 'package:unibus/data/models/notification.dart';
 import 'package:unibus/presentation/admin/companies_management/model/company_model.dart';
 import 'package:unibus/presentation/admin/users_manage/model/user_model.dart';
 import 'package:unibus/presentation/comapny/chat_center/model/message_model.dart';
@@ -37,6 +38,10 @@ class ApiClient extends GetConnect {
 
    Future<void> updateProfile (UserModel user) async{
      await firebaseFirestore.collection('users').doc(user.userId).update(user.toJson());
+   }
+
+   Future<void> resetPassword (String password) async{
+     await firebaseAuth.currentUser?.updatePassword(password) ;
    }
 
 
@@ -116,7 +121,74 @@ class ApiClient extends GetConnect {
        price.uid = e.id;
        return price;
      }) .toList();
-
-
    }
+   
+   Future<List<Driver>> getDriversOfRequests () async{
+     List<Driver> drivers = [];
+     var response = await firebaseFirestore.collection('requests')
+         .where('userId',isEqualTo: firebaseAuth.currentUser?.uid)
+         .where('status',isEqualTo: 1).get();
+     for(var request in response.docs) {
+       if (request.data()['driverId'] != null) {
+               var driver = await getDriver(request.data()['driverId']);
+                drivers.add(driver);
+           }
+     }
+     return drivers;
+   }
+   Future<void> addRate (Driver driver) async{
+     await firebaseFirestore.collection('drivers').doc(driver.uid).update(driver.toJson());
+   }
+
+   // stream of notifications
+  Stream<List<Notification>> getNotifications(){
+    return firebaseFirestore.collection('notifications')
+    .orderBy('time',descending: true)
+    /*.where('userId',isEqualTo: firebaseAuth.currentUser?.uid)
+       */ .snapshots().map(
+          (event) => event.docs.map(
+            (e) {
+              var notification = Notification.fromJson(e.data());
+              notification.uid = e.id;
+              return notification;
+            },
+          ).toList(),
+        );
+  }
+
+   Stream<Driver> getDriverStream(driverId) {
+     return firebaseFirestore
+         .collection('drivers')
+         .doc(driverId)
+         .snapshots()
+         .map((doc) => Driver.fromJson(doc.data()!));
+   }
+
+   Future<Trip?> getCurrentTrip() async {
+     try {
+       var currentTripSnapshot =
+       await firebaseFirestore.collection('CurrentTrips').get();
+       var requestsSnapshot = await firebaseFirestore
+           .collection('requests')
+           .where('userId', isEqualTo: firebaseAuth.currentUser?.uid)
+           .where('status', isEqualTo: 1)
+           .get();
+       int reqlen = requestsSnapshot.docs.length;
+       int curlen = currentTripSnapshot.docs.length;
+       for (var request in requestsSnapshot.docs) {
+         var tripId = request.data()['tripID'];
+         var tripSnapshot = currentTripSnapshot.docs.where(
+               (element) => element.id == tripId,).toList()[0];
+           return Trip.fromJson(tripSnapshot.data());
+       }
+       return null; // No trip found
+     } catch (e) {
+       print('Error fetching current trip: $e');
+       return null;
+     }
+   }
+
+
+
+
 }

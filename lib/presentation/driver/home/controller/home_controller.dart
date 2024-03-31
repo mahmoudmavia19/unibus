@@ -1,23 +1,30 @@
 import 'dart:async';
 import 'dart:math';
 
+import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
+import 'package:unibus/data/remote_data_source/driver_remote_data_source.dart';
+import 'package:unibus/presentation/comapny/travels_management/model/trip.dart';
 
 import '../../../../core/app_export.dart';
 import '../../../../core/constants/constant.dart';
+import '../../../../data/models/notification.dart' as noti;
 
 class DriverHomeController extends GetxController {
   final Rx<LocationData> startLocation = Rx(LocationData.fromMap({
-    'latitude': startMapLocation.latitude,
-    'longitude': startMapLocation.longitude,
+    'latitude': testPath.first.latitude,
+    'longitude': testPath.first.longitude,
   }));
   final Rx<LocationData> endLocation = Rx(LocationData.fromMap({
-    'latitude': startMapLocation.latitude + 0.005,
-    'longitude': startMapLocation.longitude + 0.005,
+    'latitude': testPath.last.latitude,
+    'longitude': testPath.last.longitude,
   }));
-  late GoogleMapController mapController;
+  final Rx<LocationData> currentLocation_ = Rx(LocationData.fromMap({}));
 
+  Trip trip = Get.arguments;
+  late GoogleMapController mapController;
+  DriverRemoteDataSource remoteDataSource = Get.find<DriverRemoteDataSourceImpl>();
   List<LatLng> polylineCoordinates = [];
 
   @override
@@ -32,19 +39,34 @@ class DriverHomeController extends GetxController {
   }
 
   void startUpdatingLocations() {
-    startLocation.value = LocationData.fromMap({
-      'latitude': startMapLocation.latitude,
-      'longitude': startMapLocation.longitude,
-    });
-    Get.snackbar('Trip Alert', 'Trip started');
-    Timer.periodic(Duration(milliseconds: 500), (Timer timer) {
-      updateLocations(timer);
-      print(startLocation.value);
-      print('start');
-
-    });
+    sendNotification('Trip started');
+    sendCurrentTrip();
+  getCurrentLocation();
   }
+  void stopUpdatingLocations() {
+    Get.defaultDialog(
+      title: 'Trip Alert',
+      middleText: 'Are you sure you want to end the trip?',
+      actions: [
+        TextButton(
+          onPressed: () {
+            Get.back();
+          },
+          child: Text('Cancel'),
+        ),
+        TextButton(
+          onPressed: () {
+            endCurrentTrip();
+            sendNotification('Trip ended');
+            Get.back();
+            Get.back();
+          },
+          child: Text('End Trip'),
+        )
+      ]
+    );
 
+  }
   double calculateDistance(LatLng point1, LatLng point2) {
     const double earthRadius = 6371000; // in meters
 
@@ -99,7 +121,65 @@ class DriverHomeController extends GetxController {
   }
 
   void getPolyPoints() {
-    polylineCoordinates.add(LatLng(startLocation.value.latitude!, startLocation.value.longitude!));
-    polylineCoordinates.add(LatLng(endLocation.value.latitude!, endLocation.value.longitude!));
+    polylineCoordinates= testPath;
+
+   }
+   sendNotification(body)async{
+    var notification =noti.Notification(
+      title: trip.number,
+      body: body,
+      time: DateTime.now(),
+      tripId: trip.id
+    );
+     (await remoteDataSource.sendNotification(notification)).fold((l) {}, (r) {});
+   }
+
+   sendCurrentTrip()async{
+     (await remoteDataSource.currentTrip(trip)).fold((l) => null, (r) => null);
+   }
+
+   endCurrentTrip()async{
+     (await remoteDataSource.deleteCurrentTrip(trip)).fold((l) => null, (r) => null);
+   }
+  shareLocation(LatLng location)async{
+    (await remoteDataSource.shareMyLocation(location)).fold((l) {
+
+    }, (r) {
+
+    });
   }
+  Location location = Location();
+
+
+  void getCurrentLocation() async {
+    Get. snackbar('Trip Alert', 'Trip Started');
+    location.onLocationChanged.listen(
+          (newLoc) {
+        currentLocation_.value = newLoc;
+        shareLocation(LatLng(newLoc.latitude!, newLoc.longitude!));
+        if (newLoc.latitude! < endLocation.value.latitude!) {
+
+          if(calculateDistance(LatLng(newLoc.latitude!,newLoc.longitude!),
+              LatLng(endLocation.value.latitude!,endLocation.value.longitude!))== 20){
+            Get. snackbar('Trip Alert', 'Trip very close');
+          }
+         }   else if(calculateDistance(LatLng(newLoc.latitude!,newLoc.longitude!),
+            LatLng(endLocation.value.latitude!,endLocation.value.longitude!))==0) {
+          // Stop the timer when the end point is reached
+         }
+
+        mapController.animateCamera(
+          CameraUpdate.newCameraPosition(
+            CameraPosition(
+              zoom: 19,
+              target: LatLng( currentLocation_.value.latitude!,  currentLocation_.value.longitude!),
+            ),
+          ),
+        );
+
+
+      },
+    );
+  }
+
 }

@@ -7,7 +7,7 @@ import 'package:unibus/presentation/comapny/chat_center/model/message_model.dart
 class ChatRoomController extends GetxController {
    RxList<MessageModel> messages = <MessageModel>[].obs;
    Company company = Get.arguments;
-   RemoteDataSource remoteDataSource = Get.find<RemoteDateSourceImpl>();
+   RemoteDataSource remoteDataSource = Get.find<RemoteDataSourceImpl>();
   @override
   void onInit() {
     getMessages();

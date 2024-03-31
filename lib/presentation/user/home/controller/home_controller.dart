@@ -7,7 +7,7 @@ import 'package:unibus/presentation/admin/companies_management/model/company_mod
 class HomeController extends GetxController {
   RxList<Company> companies = RxList<Company>([]);
   Rx<FlowState> state = Rx<FlowState>(LoadingState(stateRendererType: StateRendererType.fullScreenLoadingState));
-  RemoteDataSource remoteDataSource = Get.find<RemoteDateSourceImpl>();
+  RemoteDataSource remoteDataSource = Get.find<RemoteDataSourceImpl>();
 
   Future<void> getCompanies() async{
     state.value = LoadingState(stateRendererType: StateRendererType.fullScreenLoadingState);

@@ -10,7 +10,7 @@ import '../../../../core/utils/state_renderer/state_renderer_impl.dart';
 
 class PaymentController extends GetxController {
   Rx<FlowState> state = Rx<FlowState>(ContentState());
-  RemoteDataSource remoteDataSource = Get.find<RemoteDateSourceImpl>();
+  RemoteDataSource remoteDataSource = Get.find<RemoteDataSourceImpl>();
   TextEditingController cardNumberController = TextEditingController();
   TextEditingController expiryDateController = TextEditingController();
   TextEditingController cvvController = TextEditingController();

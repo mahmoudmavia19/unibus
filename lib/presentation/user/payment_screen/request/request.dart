@@ -4,6 +4,7 @@ class Request {
   String? uid;
   String? tripID;
   String? companyId;
+  String? driverId;
   String? userId;
   int? status;
   DateTime? date;
@@ -16,12 +17,14 @@ class Request {
         this.companyId,
         this.userId,
         this.status,
+        this.driverId,
         this.date,
         this.payment});
 
   Request.fromJson(Map<String, dynamic> json) {
     uid = json['uid'];
     tripID = json['tripID'];
+    driverId = json['driverId'];
     companyId = json['companyId'];
     userId = json['userId'];
     status = json['status'];
@@ -39,6 +42,7 @@ class Request {
       'status': status,
       'date': date?.toIso8601String(),
       'payment': payment?.toJson(),
+      'driverId': driverId
     };
   }
 }

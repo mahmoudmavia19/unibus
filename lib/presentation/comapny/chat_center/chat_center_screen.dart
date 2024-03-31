@@ -42,24 +42,24 @@ class ChatCenterScreen extends GetWidget<ChatCenterController> {
     children: [
       Expanded(
         child: ListView.builder(
-          itemCount: controller.chats.length,
+          itemCount: controller.students.length,
           itemBuilder: (context, index) {
             return Column(
               children: [
                 ListTile(
-                  title: Text(controller.chats[index].title??'',style: TextStyle(fontWeight: FontWeight.bold,color: theme.primaryColor),),
+                  title: Text(controller.students[index].title??'',style: TextStyle(fontWeight: FontWeight.bold,color: theme.primaryColor),),
                   subtitle: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      Text(controller.chats[index].lastMessage??''),
-                      Text(DateFormat.yMMMd().format(controller.chats[index].lastMessageTime!), style: TextStyle(fontSize: 12,color: Colors.grey),),
+                      Text(controller.students[index].lastMessage??''),
+                      Text(DateFormat.yMMMd().format(controller.students[index].lastMessageTime!), style: TextStyle(fontSize: 12,color: Colors.grey),),
                     ],
                   ),
                   trailing: Icon(Icons.arrow_forward_ios),
                   onTap: () {
                     // Navigate to the chat room when tapped
-                    Get.toNamed(AppRoutes.companyChatRoom,arguments: controller.chats[index]);
+                    Get.toNamed(AppRoutes.companyChatRoom,arguments: controller.students[index]);
                   },
                 ),
                 Divider()
@@ -74,24 +74,24 @@ class ChatCenterScreen extends GetWidget<ChatCenterController> {
     children: [
       Expanded(
         child: ListView.builder(
-          itemCount: controller.chats.length,
+          itemCount: controller.employees.length,
           itemBuilder: (context, index) {
             return Column(
               children: [
                 ListTile(
-                  title: Text(controller.chats[index].title??'',style: TextStyle(fontWeight: FontWeight.bold,color: theme.primaryColor),),
+                  title: Text(controller.employees[index].title??'',style: TextStyle(fontWeight: FontWeight.bold,color: theme.primaryColor),),
                   subtitle: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      Text(controller.chats[index].lastMessage??''),
-                      Text(DateFormat.yMMMd().format(controller.chats[index].lastMessageTime!), style: TextStyle(fontSize: 12,color: Colors.grey),),
+                      Text(controller.employees[index].lastMessage??''),
+                      Text(DateFormat.yMMMd().format(controller.employees[index].lastMessageTime!), style: TextStyle(fontSize: 12,color: Colors.grey),),
                     ],
                   ),
                   trailing: Icon(Icons.arrow_forward_ios),
                   onTap: () {
                     // Navigate to the chat room when tapped
-                    Get.toNamed(AppRoutes.companyChatRoom,arguments: controller.chats[index]);
+                    Get.toNamed(AppRoutes.companyChatRoom,arguments: controller.employees[index]);
                   },
                 ),
                 Divider()

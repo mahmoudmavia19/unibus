@@ -1,3 +1,4 @@
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:unibus/data/models/rate.dart';
 
 class Driver {
@@ -8,14 +9,18 @@ class Driver {
   String? phone;
   String? email;
   DriverRate? rate;
+  LatLng ? currentLocation ;
+
 
   Driver({
     required this.name,
       this.uid,
       this.companyId,
+    this.rate,
     required this.address,
     required this.phone,
     required this.email,
+    this.currentLocation
    });
   Driver.fromJson(Map<String, dynamic> json) {
     name = json['name'];
@@ -25,6 +30,10 @@ class Driver {
     phone = json['phone'];
     email = json['email'];
     rate = json['rate']!=null?DriverRate.fromJson(json['rate']):null;
+    currentLocation = json['currentLocation']!=null?LatLng(
+      json['currentLocation']['latitude'],
+      json['currentLocation']['longitude']
+    ) :null;
    }
 
    toJson() {
@@ -36,6 +45,7 @@ class Driver {
        'phone': phone,
        'email': email,
        'rate': rate?.toJson(),
+       'currentLocation': currentLocation
      };
    }
 

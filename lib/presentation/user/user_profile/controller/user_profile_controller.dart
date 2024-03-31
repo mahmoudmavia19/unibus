@@ -12,7 +12,7 @@ class UserProfileController extends GetxController {
   late TextEditingController phoneController;
   late TextEditingController passwordController;
   Rx<FlowState> flowState = Rx<FlowState>(LoadingState(stateRendererType: StateRendererType.fullScreenLoadingState));
-  RemoteDataSource remoteDataSource = Get.find<RemoteDateSourceImpl>();
+  RemoteDataSource remoteDataSource = Get.find<RemoteDataSourceImpl>();
   Rx<UserModel?> user = Rx<UserModel?>(null);
 
 
@@ -65,8 +65,16 @@ class UserProfileController extends GetxController {
      userType: 0,
    ))).fold((l) {
      flowState.value = ErrorState(StateRendererType.fullScreenErrorState,l.message);
-   }, (r) {
-     flowState.value = ContentState();
+   }, (r) async{
+     if(passwordController.text.isNotEmpty){
+       (await remoteDataSource.resetPassword(passwordController.text)).fold((l) {
+         flowState.value = ErrorState(StateRendererType.popupErrorState,l.message);
+       }, (r) {
+         flowState.value = SuccessState(StateRendererType.popupSuccessState,'Successfully update profile');
+       });
+     }else{
+       flowState.value = SuccessState(StateRendererType.popupSuccessState,'Successfully update profile');
+     }
    });
   }
 }

@@ -7,7 +7,7 @@ class UserLoginController extends GetxController {
   final TextEditingController usernameController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
   Rx<FlowState> state = Rx<FlowState>(ContentState());
-  RemoteDataSource remoteDataSource = Get.find<RemoteDateSourceImpl>() ;
+  RemoteDataSource remoteDataSource = Get.find<RemoteDataSourceImpl>() ;
    FlowState get getState => state.value;
   RxBool obscurePassword = true.obs;
   var formKey = GlobalKey<FormState>();
