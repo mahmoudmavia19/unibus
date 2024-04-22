@@ -9,6 +9,7 @@ class AppStrings {
   static const String send = 'Send';
   static const String save = 'Save';
   static const String userManagement ='Users Management' ;
+  static const String termsNotAccepted = 'Please accept terms and conditions';
   static const String userId = 'User ID';
   static const String name = 'Name';
   static const String Company = 'Company';

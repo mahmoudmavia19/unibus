@@ -25,9 +25,18 @@ class UserLoginController extends GetxController {
         StateRendererType.popupErrorState,
         failure.message
         );
-      },(r){
+      },(r)async{
         if(r) {
-          Get.offAllNamed(AppRoutes.userMain);
+          (await remoteDataSource.getProfile()).fold((l) => null, (r){
+            if(r.blocked){
+              state.value = ErrorState(
+                StateRendererType.popupErrorState,
+                "Your account is blocked"
+              );
+            }else {
+              Get.offAllNamed(AppRoutes.userMain);
+            }
+          });
         }
       else {
           state.value = ErrorState(StateRendererType.popupErrorState, 'You are not user');

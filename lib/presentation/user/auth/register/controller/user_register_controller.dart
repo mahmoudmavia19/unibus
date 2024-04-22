@@ -28,7 +28,7 @@ class UseRegisterController extends GetxController {
       if (phoneValidation(phoneController.text)) {
         if (emailValidation(emailController.text)) {
           if (nameValidation(usernameController.text)) {
-            if (passwordController.text != cPasswordController.text) {
+            if (passwordController.text == cPasswordController.text) {
               state.value = LoadingState(
                   stateRendererType: StateRendererType.fullScreenLoadingState);
               var user = UserModel(

@@ -33,17 +33,25 @@ class CompanyRegisterController extends GetxController {
       if(phoneValidation(phoneController.text)){
       if(emailValidation(emailController.text)){
       if(passwordController.text == cPasswordController.text){
-      state.value = LoadingState(stateRendererType: StateRendererType.fullScreenLoadingState);
-      var company = Company(
-        name: usernameController.text,
-        email: emailController.text,
-        phone: phoneController.text,
-      ) ;
-      (await remoteDataSource.register(company, passwordController.text)).fold((failure) {
-        state.value = ErrorState(StateRendererType.popupErrorState,failure.message);
-      },(l) {
-        Get.offAllNamed(AppRoutes.companyProfileScreen);
-      });
+        if(accepted.value) {
+          state.value = LoadingState(
+              stateRendererType: StateRendererType.fullScreenLoadingState);
+          var company = Company(
+            name: usernameController.text,
+            email: emailController.text,
+            phone: phoneController.text,
+          );
+          (await remoteDataSource.register(company, passwordController.text))
+              .fold((failure) {
+            state.value =
+                ErrorState(StateRendererType.popupErrorState, failure.message);
+          }, (l) {
+            Get.offAllNamed(AppRoutes.companyProfileScreen);
+          });
+        } else {
+          state.value = ErrorState(
+              StateRendererType.popupErrorState, AppStrings.termsNotAccepted);
+        }
     } else {
       state.value = ErrorState(StateRendererType.popupErrorState,AppStrings.passwordNotMatch);
     }

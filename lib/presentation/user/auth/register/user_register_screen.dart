@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:unibus/core/utils/state_renderer/state_renderer_impl.dart';
-
 import '../../../../core/app_export.dart';
 import '../../../../core/utils/app_strings.dart';
 import '../../../../widgets/custom_button.dart';

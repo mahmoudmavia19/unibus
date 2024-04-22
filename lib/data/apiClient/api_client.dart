@@ -115,7 +115,8 @@ class ApiClient extends GetConnect {
    }
 
    Future<List<Price>> getPrice (String companyId) async{
-     var response = await firebaseFirestore.collection('prices').get();
+     var response = await firebaseFirestore.collection('prices')
+         .where('companyId',isEqualTo: companyId).get();
      return response.docs.map((e) {
        var price = Price.fromJson(e.data());
        price.uid = e.id;

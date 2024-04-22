@@ -22,9 +22,18 @@ class CompanyLoginController extends GetxController {
       state.value = LoadingState(stateRendererType: StateRendererType.fullScreenLoadingState);
       (await remoteDataSource.login(usernameController.text, passwordController.text)).fold((failure) {
         state.value = ErrorState(StateRendererType.popupErrorState,failure.message);
-      },(l) {
+      },(l) async{
         if(l){
-          Get.offAllNamed(AppRoutes.companyProfileScreen);
+           (await remoteDataSource.getProfile()).fold((l) => null, (r){
+             if(r.blocked){
+               state.value = ErrorState(
+                 StateRendererType.popupErrorState,
+                 "Your account is blocked"
+               );
+             }else {
+               Get.offAllNamed(AppRoutes.companyProfileScreen);
+             }
+           });
         } else {
           state.value = ErrorState(StateRendererType.popupErrorState,AppStrings.noCompany);
         }
