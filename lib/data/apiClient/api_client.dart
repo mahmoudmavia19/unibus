@@ -97,12 +97,12 @@ class ApiClient extends GetConnect {
 
    Future<List<Trip>> getTrips (String companyId,String districtId)async{
      var response = await firebaseFirestore.collection('trips').where('companyId',isEqualTo: companyId)
-         .where('distinct',isEqualTo: districtId).get();
+         .where('district',isEqualTo: districtId).get();
      return response.docs.map((e) {
        var trip = Trip.fromJson(e.data());
        trip.id = e.id;
        return trip;
-     }) .toList();
+     }) .toList(); 
    }
    Future<Driver> getDriver (String driver)async{
      var response = await firebaseFirestore.collection('drivers').doc(driver).get();

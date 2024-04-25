@@ -2,10 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:lottie/lottie.dart';
+import 'package:searchfield/searchfield.dart';
 import 'package:slide_countdown/slide_countdown.dart';
 import 'package:unibus/core/app_export.dart';
 import 'package:unibus/core/utils/state_renderer/state_renderer_impl.dart';
 import 'package:unibus/presentation/user/company_trips/controller/company_trips_controller.dart';
+
+import '../../comapny/travels_management/model/trip.dart';
 
 class CompanyTripScreen extends GetWidget<CompanyTripsController> {
   @override
@@ -47,16 +50,40 @@ class CompanyTripScreen extends GetWidget<CompanyTripsController> {
 
             ],
           ),
-          Container(
-            padding:EdgeInsets.all(20) ,
-            child: TextFormField(
-                decoration: InputDecoration(
-                    hintText: 'Enter Tip Number',
+          Obx(
+                ()=>Container(
+              padding:EdgeInsets.all(20) ,
+              child:  SearchField<Trip>(
+                suggestions: controller.trips
+                    .map(
+                      (e) => SearchFieldListItem<Trip>(
+                    e.number.toString(),
+                    item: e,
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Row(
+                        children: [
+                          Text(e.number.toString()),
+                          SizedBox(width: 10,),
+                          Text('at'),
+                          SizedBox(width: 10,),
+                          Text(e.time?.format()),
+                        ],
+                      ),
+                    ),
+                  ),
+                ).toList(),
+                onSuggestionTap: (p0) {
+                  Get.toNamed(AppRoutes.userPaymentScreen,arguments: [p0.item,controller.price]);
+                },
+                searchInputDecoration:  InputDecoration(
+                    hintText: 'Enter Trip Number',
                     prefixIcon: Icon(Icons.search),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(10.0),
                     )
-                )
+                ),
+              ),
             ),
           ),
           Obx(
@@ -100,7 +127,7 @@ class CompanyTripScreen extends GetWidget<CompanyTripsController> {
                       children: [
                         Icon(Icons.timer,color: theme.primaryColor,),
                         SizedBox(width: 10.0,),
-                        Text('time : ${DateFormat.jm().format(trip.time!)}'),
+                        Text('time : ${trip.time!.format()}'),
                       ],
                     ),
                     SizedBox(height: 10,),

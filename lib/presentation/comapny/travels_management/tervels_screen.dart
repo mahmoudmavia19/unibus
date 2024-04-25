@@ -85,7 +85,7 @@ class TripsManagementScreen extends StatelessWidget {
               _buildText(AppStrings.tripExitGate, trip.exitGate??""),
               _buildText(AppStrings.driver, tripController.drivers.where((p0) => p0.uid==trip.driver).first.name??""),
               _buildText(AppStrings.day, trip.days.toString()),
-              _buildText(AppStrings.time, DateFormat.jm().format(trip.time!)),
+              _buildText(AppStrings.time,trip.time!.format()),
              ],
           ),
         ),

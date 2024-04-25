@@ -1,18 +1,15 @@
 import 'package:day_picker/day_picker.dart';
-import 'package:flutter/foundation.dart';
-import 'package:flutter/gestures.dart';
-import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:intl/intl.dart';
+  import 'package:flutter/material.dart';
+
 import 'package:unibus/core/utils/app_strings.dart';
 import 'package:unibus/core/utils/state_renderer/state_renderer_impl.dart';
 import 'package:unibus/presentation/comapny/drivers_management/model/driver.dart';
 import 'package:unibus/presentation/comapny/travels_management/controller/edit_trip_controller.dart';
 
 import '../../../core/app_export.dart';
-import '../../../core/constants/constant.dart';
-import 'controller/add_trip_controller.dart';
+import '../price_management/model/price.dart';
+import 'model/trip.dart';
+
 
 class EditTripScreen extends GetWidget<EditTripController> {
 
@@ -66,6 +63,17 @@ class EditTripScreen extends GetWidget<EditTripController> {
             },
           ),
           SizedBox(height: 16.0),
+          Text(AppStrings.time, style: Theme.of(context).textTheme.titleLarge),
+          SizedBox(height: 16.0),
+          TextFieldWidget(labelText: AppStrings.time,
+              onTap: () {
+                showTimePicker(context: context, initialTime: TimeOfDay.now()).then((value) {
+                  controller.tripDateTimeController.text = value!.format(context);
+                  controller.trip.time=TimeOfDayData(value.hour,value.minute);
+                });
+              },
+              controller: controller.tripDateTimeController),
+          SizedBox(height: 16.0),
           Text(AppStrings.driver, style: Theme.of(context).textTheme.titleLarge),
           SizedBox(height: 16.0),
           SizedBox(height: 16.0),
@@ -91,24 +99,37 @@ class EditTripScreen extends GetWidget<EditTripController> {
                 }),
           ),
           SizedBox(height: 16.0),
+          Text(AppStrings.district, style: Theme.of(context).textTheme.titleLarge),
+          SizedBox(height: 16.0),
+          Obx(
+                ()=> DropdownButtonFormField<Price?>(items: controller.tripController.districts.map((e) => DropdownMenuItem(
+              value: e,
+              child: Text(e.district??''),
+            )) .toList(),
+                value: controller.selectedDistrict.value,
+                validator:(value) {
+                  if(value == null){
+                    return 'Please select a district';
+                  }
+                  return null;
+                },
+                style: TextStyle(color: Colors.black),
+                decoration: InputDecoration(
+                  labelText: AppStrings.district,
+                  border: OutlineInputBorder(),
+                ),
+                onChanged:(value) {
+                  controller.selectedDistrict.value = value;
+                }),
+          ),
+          SizedBox(height: 16.0),
           Text(AppStrings.tripExitGate, style: Theme.of(context).textTheme.titleLarge),
           SizedBox(height: 16.0),
-          TextFieldWidget(labelText: AppStrings.tripExitGate, controller: controller.tripExitGateController,
-            onTap: () {
-              _openMapSheet( controller.tripExitGateController,onTap: (p0) {
-                controller.trip.endLocation = p0;
-              },);
-            },),
+          TextFieldWidget(labelText: AppStrings.tripExitGate, controller: controller.tripExitGateController,),
           SizedBox(height: 16.0),
           Text(AppStrings.tripEntryGate, style: Theme.of(context).textTheme.titleLarge),
           SizedBox(height: 16.0),
-          TextFieldWidget(labelText: AppStrings.tripEntryGate, controller: controller.tripEnterGateController,onTap: () {
-            _openMapSheet( controller.tripEnterGateController,onTap: (p0) {
-              controller.trip.startLocation = p0;
-            });
-          },),
-          SizedBox(height: 16.0),
-
+          TextFieldWidget(labelText: AppStrings.tripEntryGate, controller: controller.tripEnterGateController,),
           SizedBox(height: 16.0),
           SizedBox(
             height: 50.0,
@@ -116,61 +137,13 @@ class EditTripScreen extends GetWidget<EditTripController> {
               onPressed: (){
                 controller.editTrip() ;
               },
-              child: Text(AppStrings.addTrip),
+              child: Text(AppStrings.editTrip),
             ),
           ),
         ],
       ),
     ),
   );
-
-  _openMapSheet(TextEditingController textController,{void Function(LatLng)? onTap}) {
-    Get.bottomSheet( Obx(() {
-      return Container(
-        child: Stack(
-          children: [
-            GoogleMap(
-              gestureRecognizers: <Factory<OneSequenceGestureRecognizer>>[
-                new Factory<OneSequenceGestureRecognizer>(() => new EagerGestureRecognizer()),
-              ].toSet(),
-              mapType: MapType.terrain,
-              myLocationEnabled: true,
-              initialCameraPosition: CameraPosition(
-                target: LatLng(controller.currentLocation_.value.latitude ?? startMapLocation.latitude,
-                    controller.currentLocation_.value.longitude ?? startMapLocation.longitude),
-                zoom: 16,
-              ),
-              onMapCreated: (_controller) {
-                controller.mapController = _controller;
-              },
-              onTap: (argument) {
-                print(argument);
-                controller.chooseLocation(argument,textController);
-                onTap?.call(argument);
-              },
-              markers: {
-                Marker(
-                  markerId: MarkerId('currentLocation'),
-                  position: LatLng(controller.currentLocation_.value.latitude ?? startMapLocation.latitude,
-                      controller.currentLocation_.value.longitude ?? startMapLocation.longitude),
-                  infoWindow: InfoWindow(title: AppStrings.currentLocation),
-                ),
-              },
-            ),
-            Padding(
-              padding: const EdgeInsets.all(20.0),
-              child: ElevatedButton(onPressed: () {
-                Get.back();
-              },child:Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: (Text('Done')),
-              )),
-            ),
-          ],
-        ),
-      );
-    }),);
-  }
 }
 
 class TextFieldWidget extends StatelessWidget {

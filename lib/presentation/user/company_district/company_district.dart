@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
+import 'package:searchfield/searchfield.dart';
 import 'package:slide_countdown/slide_countdown.dart';
 import 'package:unibus/core/app_export.dart';
 import 'package:unibus/core/utils/state_renderer/state_renderer_impl.dart';
+import 'package:unibus/presentation/comapny/price_management/model/price.dart';
 import 'package:unibus/presentation/user/company_district/controller/company_district_controller.dart';
 
 class CompanyDistrictScreen extends GetWidget<CompanyDistrictController> {
@@ -46,16 +48,32 @@ class CompanyDistrictScreen extends GetWidget<CompanyDistrictController> {
               ],
             ),
           ),
-          Container(
-            padding:EdgeInsets.all(20) ,
-            child: TextFormField(
-              decoration: InputDecoration(
-                hintText: 'Enter District Name',
-                prefixIcon: Icon(Icons.search),
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(10.0),
-                )
-              )
+          Obx(
+           ()=>Container(
+              padding:EdgeInsets.all(20) ,
+              child:  SearchField<Price>(
+                suggestions: controller.prices
+                    .map(
+                      (e) => SearchFieldListItem<Price>(
+                    e.district.toString(),
+                    item: e,
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text(e.district.toString()),
+                    ),
+                  ),
+                ).toList(),
+                onSuggestionTap: (p0) {
+                  Get.toNamed(AppRoutes.userCompanyTripsScreen,arguments: [controller.company,p0.item]);
+                },
+                searchInputDecoration:  InputDecoration(
+                    hintText: 'Enter District Name',
+                    prefixIcon: Icon(Icons.search),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10.0),
+                    )
+                ),
+              ),
             ),
           ),
           Expanded(

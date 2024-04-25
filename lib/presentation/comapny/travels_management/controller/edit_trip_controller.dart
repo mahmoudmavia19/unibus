@@ -1,17 +1,13 @@
 
 import 'package:day_picker/model/day_in_week.dart';
 import 'package:flutter/material.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:intl/intl.dart';
-import 'package:location/location.dart';
 import 'package:unibus/presentation/comapny/drivers_management/model/driver.dart';
 import 'package:unibus/presentation/comapny/travels_management/controller/travels_controller.dart';
 import 'package:unibus/presentation/comapny/travels_management/model/trip.dart';
-
 import '../../../../core/app_export.dart';
-import '../../../../core/utils/state_renderer/state_renderer.dart';
 import '../../../../core/utils/state_renderer/state_renderer_impl.dart';
-import 'package:geocoding/geocoding.dart' as geocoding;
+
+import '../../price_management/model/price.dart';
 class EditTripController extends GetxController {
   int index = Get.arguments[0] ;
   Trip trip = Get.arguments[1] ;
@@ -21,8 +17,6 @@ class EditTripController extends GetxController {
  late final  tripExitGateController;
  late final  tripEnterGateController;
  late final  tripContentController;
-   final Rx<LocationData> currentLocation_ = Rx(LocationData.fromMap({}));
-  late GoogleMapController mapController;
   List<DayInWeek> days = [
     DayInWeek(
       "Sat",
@@ -55,71 +49,43 @@ class EditTripController extends GetxController {
   Rx<FlowState> state = Rx<FlowState>(ContentState());
   TripController tripController = Get.put(TripController());
   Rx<Driver?> selectedDriver = Rx<Driver?>(null);
+  Rx<Price?> selectedDistrict = Rx<Price?>(null);
    FlowState get getState => state.value;
 
   @override
   void onClose() {
-    mapController.dispose();
     super.onClose();
   }
 
   @override
   void onInit() async{
     tripNumberController = TextEditingController(text: trip.number);
+    tripDateTimeController = TextEditingController(text: trip.time?.format());
      tripExitGateController = TextEditingController(text: trip.exitGate);
     tripEnterGateController = TextEditingController(text: trip.enterGate);
     for(var i=0 ; i<days.length;i++){
        days[i].isSelected = trip.days?.contains(days[i].dayKey)??false;
     }
     selectedDriver.value = tripController.drivers.where((p0) => p0.uid == trip.driver).first;
+    selectedDistrict.value = tripController.districts.where((p0) => p0.uid == trip.district).first;
     if(tripController.drivers.isEmpty){
       await tripController.getDrivers();
       selectedDriver.value = tripController.drivers.where((p0) => p0.uid == trip.driver).first;
     }
-    _getCurrentLocation();
-    super.onInit();
-  }
 
-  chooseLocation(LatLng target,TextEditingController controller) async{
-    currentLocation_.value = LocationData.fromMap({
-      'latitude': target.latitude,
-      'longitude': target.longitude,
-    });
-    controller.text = await getAddressFromCoordinates(LatLng(currentLocation_.value.latitude!, currentLocation_.value.longitude!));
-  }
-
-  Future<void> _getCurrentLocation() async {
-    Location location = Location();
-    LocationData currentLocation = await location.getLocation();
-    currentLocation_.value = currentLocation;
-  }
-
-  Future<String> getAddressFromCoordinates(LatLng latlng) async {
-    try {
-      List<geocoding.Placemark> placemarks = await geocoding.placemarkFromCoordinates(latlng.latitude, latlng.longitude);
-
-      if (placemarks.isNotEmpty) {
-        geocoding.Placemark placemark = placemarks[0];
-        print("${placemark.street}, ${placemark.locality}, ${placemark.country}");
-        return "${placemark.street}, ${placemark.locality}, ${placemark.country}";
-        // Set the address to the controller or use it as needed
-      } else {
-        print('No address found');
-        return "";
-      }
-    } catch (e) {
-      print("Error: $e");
-      print('Error getting address');
-      return "";
+    if(tripController.drivers.isEmpty){
+      await tripController.getDistricts();
+      selectedDistrict.value = tripController.districts.where((p0) => p0.uid == trip.district).first;
     }
+     super.onInit();
   }
-
 
   Future<void> editTrip() async {
     if (flowKey.currentState!.validate()) {
       trip.enterGate = tripEnterGateController.text;
       trip.exitGate = tripExitGateController.text;
       trip.driver = selectedDriver.value?.uid??'';
+      trip.district = selectedDistrict.value?.uid??'';
       trip.number = tripNumberController.text;
       tripController.editTrip(index,trip);
       Get.back();

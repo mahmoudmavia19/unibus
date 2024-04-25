@@ -6,6 +6,8 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:unibus/core/utils/app_strings.dart';
 import 'package:unibus/core/utils/state_renderer/state_renderer_impl.dart';
 import 'package:unibus/presentation/comapny/drivers_management/model/driver.dart';
+import 'package:unibus/presentation/comapny/price_management/model/price.dart';
+import 'package:unibus/presentation/comapny/travels_management/model/trip.dart';
 
 import '../../../core/app_export.dart';
 import '../../../core/constants/constant.dart';
@@ -100,15 +102,14 @@ class AddTripScreen extends GetWidget<AddTripController> {
               onTap: () {
                 showTimePicker(context: context, initialTime: TimeOfDay.now()).then((value) {
                   controller.tripDateTimeController.text = value!.format(context);
-                  controller.trip.time = DateTime.tryParse(value.format(context));
+                  controller.trip.time=TimeOfDayData(value.hour,value.minute);
                 });
               },
               controller: controller.tripDateTimeController),
           SizedBox(height: 16.0),
           Text(AppStrings.driver, style: Theme.of(context).textTheme.titleLarge),
           SizedBox(height: 16.0),
-          SizedBox(height: 16.0),
-          DropdownButtonFormField<Driver?>(items: controller.tripController.drivers.map((e) => DropdownMenuItem(
+           DropdownButtonFormField<Driver?>(items: controller.tripController.drivers.map((e) => DropdownMenuItem(
             value: e,
             child: Text(e.name??''),
           )) .toList(),
@@ -128,25 +129,37 @@ class AddTripScreen extends GetWidget<AddTripController> {
                 controller.selectedDriver = value;
               }),
           SizedBox(height: 16.0),
+          Text(AppStrings.district, style: Theme.of(context).textTheme.titleLarge),
+          SizedBox(height: 16.0),
+          DropdownButtonFormField<Price?>(items: controller.tripController.districts.map((e) => DropdownMenuItem(
+            value: e,
+            child: Text(e.district??''),
+          )) .toList(),
+              value: controller.selectedDistrict,
+              validator:(value) {
+                if(value == null){
+                  return 'Please select a district';
+                }
+                return null;
+              },
+              style: TextStyle(color: Colors.black),
+              decoration: InputDecoration(
+                labelText: AppStrings.district,
+                border: OutlineInputBorder(),
+              ),
+              onChanged:(value) {
+                controller.selectedDistrict = value;
+              }),
+          SizedBox(height: 16.0),
           Text(AppStrings.tripEntryGate, style: Theme.of(context).textTheme.titleLarge),
           SizedBox(height: 16.0),
-          TextFieldWidget(labelText: AppStrings.tripEntryGate, controller: controller.tripEnterGateController,
-            /*onTap: () {
-            _openMapSheet( controller.tripEnterGateController,onTap: (p0) {
-              controller.trip.startLocation = p0;
-            });
-          },*/),
+          TextFieldWidget(labelText: AppStrings.tripEntryGate, controller: controller.tripEnterGateController,),
 
           SizedBox(height: 16.0),
           Text(AppStrings.tripExitGate, style: Theme.of(context).textTheme.titleLarge),
           SizedBox(height: 16.0),
           TextFieldWidget(labelText: AppStrings.tripExitGate,
-            controller: controller.tripExitGateController,
-         /* onTap: () {
-            _openMapSheet( controller.tripExitGateController,onTap: (p0) {
-              controller.trip.endLocation = p0;
-            },);
-          },*/),
+            controller: controller.tripExitGateController,),
 
           SizedBox(height: 16.0),
           SizedBox(
@@ -163,54 +176,7 @@ class AddTripScreen extends GetWidget<AddTripController> {
     ),
   );
 
-  _openMapSheet(TextEditingController textController,{void Function(LatLng)? onTap}) {
-     Get.bottomSheet( Obx(() {
-       return Container(
-         child: Stack(
-           children: [
-             GoogleMap(
-               gestureRecognizers: <Factory<OneSequenceGestureRecognizer>>[
-                 new Factory<OneSequenceGestureRecognizer>(() => new EagerGestureRecognizer()),
-               ].toSet(),
-               mapType: MapType.terrain,
-               myLocationEnabled: true,
-               initialCameraPosition: CameraPosition(
-                 target: LatLng(controller.currentLocation_.value.latitude ?? startMapLocation.latitude,
-                     controller.currentLocation_.value.longitude ?? startMapLocation.longitude),
-                 zoom: 16,
-               ),
-               onMapCreated: (_controller) {
-                 controller.mapController = _controller;
-               },
-               onTap: (argument) {
-                 print(argument);
-                 controller.chooseLocation(argument,textController);
-                 onTap?.call(argument);
-               },
-               markers: {
-                 Marker(
-                   markerId: MarkerId('currentLocation'),
-                   position: LatLng(controller.currentLocation_.value.latitude ?? startMapLocation.latitude,
-                       controller.currentLocation_.value.longitude ?? startMapLocation.longitude),
-                   infoWindow: InfoWindow(title: AppStrings.currentLocation),
-                 ),
-               },
-             ),
-             Padding(
-               padding: const EdgeInsets.all(20.0),
-               child: ElevatedButton(onPressed: () {
-                 Get.back();
-               },child:Padding(
-                 padding: const EdgeInsets.all(8.0),
-                 child: (Text('Done')),
-               )),
-             ),
-           ],
-         ),
-       );
-     }),);
-  }
-}
+ }
 
 class TextFieldWidget extends StatelessWidget {
   final String labelText;

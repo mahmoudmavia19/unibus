@@ -122,8 +122,7 @@ class TripsTableScreen extends GetWidget<TripsTableController> {
               children: [
                 Text('enter gate : ${trip.enterGate ?? ''}'),
                 Text('exit gate : ${trip.exitGate ?? ''}'),
-                Text('time :${DateFormat.jm().format(
-                    trip.time ?? DateTime.now())}'),
+                Text('time :${trip.time?.format()}'),
               ],
             ),
             trailing: ElevatedButton(onPressed: () {

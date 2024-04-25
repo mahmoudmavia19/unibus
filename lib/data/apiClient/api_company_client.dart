@@ -1,13 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:unibus/core/app_export.dart';
-import 'package:unibus/data/models/rate.dart';
 import 'package:unibus/presentation/admin/companies_management/model/company_model.dart';
 import 'package:unibus/presentation/admin/users_manage/model/user_model.dart';
 import 'package:unibus/presentation/comapny/chat_center/model/chat_model.dart';
 import 'package:unibus/presentation/comapny/travels_management/model/trip.dart';
 import 'package:unibus/presentation/user/payment_screen/request/request.dart';
-
 import '../../presentation/comapny/chat_center/model/message_model.dart';
 import '../../presentation/comapny/drivers_management/model/driver.dart';
 import '../../presentation/comapny/price_management/model/price.dart';

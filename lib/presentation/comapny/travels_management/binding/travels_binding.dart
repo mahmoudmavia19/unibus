@@ -8,7 +8,5 @@ class TripsBinding extends Bindings {
   @override
   void dependencies() {
     Get.lazyPut(() => TripController());
-    Get.lazyPut(() => AddTripController());
-    Get.lazyPut(() => EditTripController());
   }
 }

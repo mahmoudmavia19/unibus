@@ -12,6 +12,7 @@ import 'package:unibus/presentation/comapny/drivers_management/drivers_screen.da
 import 'package:unibus/presentation/comapny/drivers_rate/drivers_rate_screen.dart';
 import 'package:unibus/presentation/comapny/price_management/binding/price_binding.dart';
 import 'package:unibus/presentation/comapny/profile/binding/profile_binding.dart';
+import 'package:unibus/presentation/comapny/travels_management/binding/add_trip_binding.dart';
 import 'package:unibus/presentation/driver/home/binding/home_binding.dart';
 import 'package:unibus/presentation/driver/home/home_screen.dart';
 import 'package:unibus/presentation/driver/trips_table/binding/trips_table_binding.dart';
@@ -52,6 +53,7 @@ import '../presentation/comapny/profile/profile_screen.dart';
 import '../presentation/comapny/student_requests/binding/student_requests_binding.dart';
 import '../presentation/comapny/student_requests/student_requests_screen.dart';
 import '../presentation/comapny/travels_management/add_trip_management.dart';
+import '../presentation/comapny/travels_management/binding/edit_trip_binding.dart';
 import '../presentation/comapny/travels_management/binding/travels_binding.dart';
 import '../presentation/comapny/travels_management/ediy_trip_screen.dart';
 import '../presentation/comapny/travels_management/tervels_screen.dart';
@@ -180,12 +182,14 @@ class AppRoutes {
     GetPage (
       name: companyAddTripScreen,
       page: () => AddTripScreen(),
-      binding: TripsBinding(),
+      bindings: [TripsBinding(),
+        AddTripBinding(),],
     ),
     GetPage (
       name: companyEditTripScreen,
       page: () => EditTripScreen(),
-      binding: TripsBinding(),
+      bindings: [TripsBinding(),
+        EditTripBinding(),],
     ),
     GetPage(
       name: companyStudentRequestScreen,

@@ -14,6 +14,7 @@ class AppStrings {
   static const String name = 'Name';
   static const String Company = 'Company';
   static const String address = 'Address';
+  static const String district = 'District';
   static const String phone = 'Phone';
   static const String emailId = 'Email ID';
   static const String invalidName = 'Invalid Name';

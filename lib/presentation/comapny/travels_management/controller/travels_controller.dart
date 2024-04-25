@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:unibus/data/remote_data_source/company_remote_data_source.dart';
 import 'package:unibus/presentation/admin/companies_management/companies_management_screen.dart';
+import 'package:unibus/presentation/comapny/price_management/model/price.dart';
 
 import '../../../../core/app_export.dart';
 import '../../../../core/utils/app_strings.dart';
@@ -16,6 +17,7 @@ class TripController extends GetxController {
   CompanyRemoteDataSource remoteDataSource = Get.find<CompanyRemoteDataSourceImpl>();
   var trips = <Trip>[];
   RxList<Driver> drivers  = <Driver>[].obs;
+  RxList<Price> districts  = <Price>[].obs;
 
   Future<void>getDrivers() async {
     state.value = LoadingState(stateRendererType: StateRendererType.fullScreenLoadingState);
@@ -39,10 +41,25 @@ class TripController extends GetxController {
       }
     );
   }
+
+  Future<void>getDistricts() async {
+    state.value = LoadingState(stateRendererType: StateRendererType.fullScreenLoadingState);
+    (await remoteDataSource.getPrices()).fold(
+      (failure) {
+        state.value = ErrorState(StateRendererType.popupErrorState, failure.message);
+      }, (r){
+      districts.value = r;
+        state.value = ContentState();
+      }
+    );
+  }
+
+
   @override
   void onInit() async{
     await getDrivers();
     await getTrips();
+    await getDistricts();
     super.onInit();
   }
 

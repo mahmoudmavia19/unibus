@@ -65,4 +65,6 @@ class ApiAdminClient {
   Future<void> forgetPassword (String email) async{
     await firebaseAuth.sendPasswordResetEmail(email: email);
   }
+
+
 }
