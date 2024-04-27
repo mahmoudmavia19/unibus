@@ -16,7 +16,11 @@ class ApiDriverClient {
 
   Future<List<Trip>> getTrips()async{
     var response = await firebaseFirestore.collection('trips').where('driver',isEqualTo: firebaseAuth.currentUser?.uid).get();
-    return response.docs.map((e) => Trip.fromJson(e.data())).toList();
+    return response.docs.map((e) {
+      var trip = Trip.fromJson(e.data());
+      trip.id = e.id;
+      return trip ;
+    }).toList();
   }
 
   Future<void> shareMyLocation(LatLng latLng) async {

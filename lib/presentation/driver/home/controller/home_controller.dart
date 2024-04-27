@@ -154,7 +154,7 @@ class DriverHomeController extends GetxController {
   void getCurrentLocation() async {
     Get. snackbar('Trip Alert', 'Trip Started');
     location.onLocationChanged.listen(
-          (newLoc) {
+          (newLoc) { 
         currentLocation_.value = newLoc;
         shareLocation(LatLng(newLoc.latitude!, newLoc.longitude!));
         if (newLoc.latitude! < endLocation.value.latitude!) {
@@ -176,8 +176,6 @@ class DriverHomeController extends GetxController {
             ),
           ),
         );
-
-
       },
     );
   }
